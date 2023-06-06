@@ -1,10 +1,15 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
+import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {
+    toggleTheme,
+    theme,
+  } = useContext(MoodContext)
 
  
 
@@ -15,7 +20,7 @@ const Navbar = () => {
   //   logOut();
   // };
   return (
-    <div className="navbar bg-slate-200 bg-opacity-50 md:sticky md:top-0 md:z-50">
+    <div className="navbar bg-slate-200 bg-opacity-80 md:sticky md:top-0 md:z-50">
       <div className="navbar-start md:mx-10 mx-2">
         <div className="dropdown">
           <label
@@ -44,12 +49,12 @@ const Navbar = () => {
               isMenuOpen ? "" : "hidden"
             }`}
           >
-            <li className="hover:text-sky-500">
+            <li className="hover:text-sky-600">
               <NavLink
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-sky-500 hover:bg-transparent"
+                    ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
                 to={"/"}
@@ -58,12 +63,12 @@ const Navbar = () => {
               </NavLink>
             </li>
 
-            <li className="hover:text-sky-500">
+            <li className="hover:text-sky-600">
               <NavLink
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-sky-500 hover:bg-transparent"
+                    ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
                 to={"/instructors"}
@@ -71,12 +76,12 @@ const Navbar = () => {
                 Instructors
               </NavLink>
             </li>
-            <li className="hover:text-sky-500">
+            <li className="hover:text-sky-600">
               <NavLink
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-sky-500 hover:bg-transparent"
+                    ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
                 to={"/classes"}
@@ -84,12 +89,12 @@ const Navbar = () => {
                 Classes
               </NavLink>
             </li>
-            <li className="hover:text-sky-500">
+            <li className="hover:text-sky-600">
               <NavLink
                 onClick={() => setIsMenuOpen(false)}
                 className={({ isActive }) =>
                   isActive
-                    ? "text-sky-500 hover:bg-transparent"
+                    ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
                 to={"/dashboard"}
@@ -100,25 +105,36 @@ const Navbar = () => {
           </ul>
         </div>
         {/*  */}
-        {/* Logo */}
-        <img className="w-[8%] ml-2" src="" alt="" />
-        <Link
-          to={"/"}
-          className="btn btn-ghost normal-case text-md md:text-2xl text-gray-600 hover:bg-transparent  hover:text-sky-500"
-        >
-        
-          Phonetics
-        </Link>
+        <div className="flex items-center ">
+        {/* TODO:Logo */}
+          <img className="w-[8%] ml-2" src="" alt="" />
+          <Link
+            to={"/"}
+            className="btn btn-ghost normal-case text-md md:text-2xl text-gray-600 hover:bg-transparent  hover:text-sky-600"
+          >
+            Phonetics
+          </Link>
+          <div className=" flex items-center md:mt-1">
+            <span className="label-text text-gray-600">{theme}</span>
+            <label className="label cursor-pointer">
+              <input
+                onClick={() => toggleTheme()}
+                type="checkbox"
+                className="toggle "
+              />
+            </label>
+          </div>
+        </div>
       </div>
       {/* Large screen manu */}
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1 text-gray-600  text-lg  ">
-          <li className="hover:text-sky-500">
+          <li className="hover:text-sky-600">
             <NavLink
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "text-sky-500 hover:bg-transparent"
+                  ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
               to={"/"}
@@ -127,12 +143,12 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          <li className="hover:text-sky-500">
+          <li className="hover:text-sky-600">
             <NavLink
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "text-sky-500 hover:bg-transparent"
+                  ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
               to={"/instructors"}
@@ -140,12 +156,12 @@ const Navbar = () => {
               Instructors
             </NavLink>
           </li>
-          <li className="hover:text-sky-500">
+          <li className="hover:text-sky-600">
             <NavLink
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "text-sky-500 hover:bg-transparent"
+                  ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
               to={"/classes"}
@@ -154,12 +170,12 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          <li className="hover:text-sky-500">
+          <li className="hover:text-sky-600">
             <NavLink
               onClick={() => setIsMenuOpen(false)}
               className={({ isActive }) =>
                 isActive
-                  ? "text-sky-500 hover:bg-transparent"
+                  ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
               to={"/dashboard"}

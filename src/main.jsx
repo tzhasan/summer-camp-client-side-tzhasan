@@ -4,9 +4,12 @@ import './index.css'
 import { RouterProvider } from 'react-router-dom';
 import router from './Routes/Routes.jsx';
 import AuthProvider from './Provider/AuthProvider';
+import MoodProvider from './Provider/Dark mood provider/MoodProvider';
 
 ReactDOM.createRoot(document.getElementById("root")).render(
-  <AuthProvider>
-    <RouterProvider router={router}></RouterProvider>
-  </AuthProvider>
+  <MoodProvider>
+    <AuthProvider>
+      <RouterProvider router={router}></RouterProvider>
+    </AuthProvider>
+  </MoodProvider>
 );
