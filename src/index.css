@@ -1,3 +1,32 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+body, html{
+  font-family: 'Barlow Condensed', sans-serif;
+}
+
+.projectMainButton {
+  border-radius: 1.5rem; 
+  /* padding-left: 1rem;  */
+  /* padding-right: 1rem;  */
+  padding: 0.500rem;
+  background-color: #380fb6; 
+  color: #ffffff; 
+  font-size: 0.75rem; 
+}
+
+.projectMainButton:hover {
+  background-color: #250681; /* Equivalent to hover:bg-yellow-500 in Tailwind */
+}
+
+@media (min-width: 768px) {
+  .projectMainButton {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .projectMainButton {
+    font-size: 1.125rem;
+  }
+}

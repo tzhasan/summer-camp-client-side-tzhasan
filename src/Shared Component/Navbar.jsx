@@ -1,8 +1,9 @@
 import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
+import { AuthContext } from "../Provider/AuthProvider";
 
 const Navbar = () => {
-  // const { user, logOut } = useContext(AuthContext);
+  const { user, logOut } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -169,45 +170,44 @@ const Navbar = () => {
 
       {/* Profile photo and login logout */}
       <div className="navbar-end ">
-        {/* {user && (
+        {user && (
           <div
-            data-tip={user.displayName}
+            data-tip={user?.displayName}
             className="avatar tooltip tooltip-bottom tooltip-accent"
           >
             <div className="w-8 rounded  mr-2 ">
-              {user.photoURL ? (
+              {user?.photoURL ? (
                 <img
                   className="w-[50%] "
                   // title={user.displayName}
-                  src={user.photoURL}
-                  alt={user.email}
+                  src={user?.photoURL}
+                  alt={user?.email}
                 />
               ) : (
                 <div
                   title={user.displayName}
                   className="md:text-6xl text-3xl text-gray-300 "
                 >
-                  <CgProfile title={user.displayName}></CgProfile>
+                  {/* USER ICON */}
+                  {/* USER ICON */}
+                  {/* USER ICON */}
                 </div>
               )}
             </div>
           </div>
-        )} */}
-        {/* {user ? (
+        )}
+        {user ? (
           <p
-            onClick={signingOut}
-            className="btn rounded-lg px-2  md:px-4  bg-yellow-300 hover:bg-yellow-500 border-0 text-gray-600 text-xs md:text-lg"
+            // onClick={signingOut}
+            className="projectMainButton"
           >
             Log out
           </p>
         ) : (
-          <Link
-            to="/login"
-            className="btn rounded-lg text-xs md:text-lg px-2 bg-yellow-300 hover:bg-yellow-500 border-0 text-gray-600 "
-          >
+          <Link to="/login" className="projectMainButton">
             Log in
           </Link>
-        )} */}
+        )}
       </div>
       {/* Profile photo and login logout */}
     </div>
