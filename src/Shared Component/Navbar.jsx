@@ -6,6 +6,8 @@ const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+ 
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
@@ -13,7 +15,7 @@ const Navbar = () => {
   //   logOut();
   // };
   return (
-    <div className="navbar bg-slate-200 bg-opacity-80 md:sticky md:top-0 md:z-50">
+    <div className="navbar bg-slate-200 bg-opacity-50 md:sticky md:top-0 md:z-50">
       <div className="navbar-start md:mx-10 mx-2">
         <div className="dropdown">
           <label
@@ -104,6 +106,7 @@ const Navbar = () => {
           to={"/"}
           className="btn btn-ghost normal-case text-md md:text-2xl text-gray-600 hover:bg-transparent  hover:text-sky-500"
         >
+        
           Phonetics
         </Link>
       </div>
