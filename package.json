@@ -10,6 +10,8 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^4.29.12",
+    "axios": "^1.4.0",
     "daisyui": "^3.0.3",
     "firebase": "^9.22.1",
     "flowbite": "^1.6.5",

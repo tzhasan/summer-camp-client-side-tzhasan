@@ -9,6 +9,7 @@ const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 // TODO: all requirments labels need to add red color *
 // TODO: Send gender info
 // TODO: reset and navigate not working
+// todo: hide unhide password like login page 
 
 const Register = () => {
   const navigate = useNavigate();
