@@ -101,7 +101,7 @@ const Navbar = () => {
                     ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
-                to={"/dashboard"}
+                to={"/dashboard/manageclasses"}
               >
                 Dashboard
               </NavLink>
@@ -181,7 +181,7 @@ const Navbar = () => {
                   ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
-              to={"/dashboard"}
+              to={"/dashboard/manageclasses"}
             >
               Dashboard
             </NavLink>
@@ -209,18 +209,15 @@ const Navbar = () => {
                 <div
                   title={user.displayName}
                   className="md:text-6xl text-3xl text-gray-300 "
-                  >
-                    <ImUserCheck></ImUserCheck>
+                >
+                  <ImUserCheck></ImUserCheck>
                 </div>
               )}
             </div>
           </div>
         )}
         {user ? (
-          <p
-            onClick={signingOut}
-            className="projectMainButton cursor-pointer"
-          >
+          <p onClick={signingOut} className="projectMainButton cursor-pointer">
             Log out
           </p>
         ) : (

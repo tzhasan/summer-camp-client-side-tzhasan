@@ -79,6 +79,7 @@ const Register = () => {
             name: data.name,
             email: data.email,
             photoURL: photoURL,
+            role: 'student'
           };
           fetch("http://localhost:5000/users", {
             method: "POST",
@@ -117,6 +118,7 @@ const Register = () => {
           name: user.displayName,
           email: user.email,
           photoURL: user.photoURL,
+          role: "student",
         };
         fetch("http://localhost:5000/users", {
           method: "POST",
