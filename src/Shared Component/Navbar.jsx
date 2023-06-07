@@ -4,9 +4,11 @@ import { AuthContext } from "../Provider/AuthProvider";
 import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
 import logo from '../../src/assets/logo.png'
 import useAuth from "../Hooks/UseAuth";
+import { ImUserCheck } from "react-icons/im";
 
 const Navbar = () => {
-  const { user, logOut } = useAuth()
+  const { user, logOut } = useContext(AuthContext)
+  console.log(user?.photoURL);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
     toggleTheme,
@@ -207,10 +209,8 @@ const Navbar = () => {
                 <div
                   title={user.displayName}
                   className="md:text-6xl text-3xl text-gray-300 "
-                >
-                  {/* USER ICON */}
-                  {/* USER ICON */}
-                  {/* USER ICON */}
+                  >
+                    <ImUserCheck></ImUserCheck>
                 </div>
               )}
             </div>

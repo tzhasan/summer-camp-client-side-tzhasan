@@ -1,9 +1,10 @@
-import React, { useEffect, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import useAuth from "../Hooks/UseAuth";
 import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 // TODO: all requirments labels need to add red color *
 // TODO: Send gender info
@@ -17,7 +18,8 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const [error2, setError2] = useState("");
-  const { createAccount, updateUserProfile, googleSignIn } = useAuth();
+  const { createAccount, updateUserProfile, googleSignIn, user } = useContext(AuthContext)
+  console.log(user);
 
   useEffect(() => {
     if (password2 === password) {

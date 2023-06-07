@@ -1,15 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../Hooks/UseAuth';
 import useTitle from '../Hooks/useTitle';
 import { useForm } from 'react-hook-form';
 import Swal from 'sweetalert2';
+import { AuthContext } from '../Provider/AuthProvider';
 
 const Login = () => {
   const navigate = useNavigate()
       useTitle("Login");
-  const { user, signIn } = useAuth();
+  const { user, signIn, googleSignIn } = useContext(AuthContext);
    // Submit
   const { register, handleSubmit } = useForm();
 
@@ -31,6 +32,42 @@ const Login = () => {
         
       })
   }
+
+  const handlegoogleSignIn = () => {
+    googleSignIn()
+      .then((result) => {
+        console.log(result.user);
+        const user = result.user;
+        const savedUser = {
+          name: user.displayName,
+          email: user.email,
+          photoURL: user.photoURL,
+        };
+        fetch("http://localhost:5000/users", {
+          method: "POST",
+          headers: {
+            "content-type": "application/json",
+          },
+          body: JSON.stringify(savedUser),
+        })
+          .then((res) => res.json())
+          .then((data) => {
+            if (data.insertedId) {
+              Swal.fire({
+                position: "top-end",
+                icon: "success",
+                title: "User created successfully.",
+                showConfirmButton: false,
+                timer: 1500,
+              });
+            }
+          });
+        // navigate(from, { replace: true });
+      })
+      .catch((err) => {
+        // setLoading(false);
+      });
+  };
   return (
     <div>
       <form
@@ -90,7 +127,7 @@ const Login = () => {
         <div className="divider">OR</div>
 
         <button
-          // onClick={handleGoogleLogin}
+          onClick={handlegoogleSignIn}
           className="btn bg-[#380fb6] hover:bg-[#250681] text-sm md:text-xl text-white w-full my-4"
         >
           {" "}
