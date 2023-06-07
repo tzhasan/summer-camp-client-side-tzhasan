@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../Hooks/UseAuth';
@@ -13,7 +13,9 @@ const Login = () => {
   const { user, signIn, googleSignIn } = useContext(AuthContext);
    // Submit
   const { register, handleSubmit } = useForm();
+  const [hide,setHide] = useState(true)
 
+  
 
   const onSubmit = (data) => { 
     signIn(data.email, data.password)
@@ -90,16 +92,23 @@ const Login = () => {
             required
           />
         </div>
-        <div className="mb-6">
+        <div className="mb-6 relative">
           <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
             Your password
           </label>
           <input
-            type="password"
+            type={hide ? "password" : "text"}
             {...register("password", { required: true, maxLength: 20 })}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light "
             required
           />
+          <button
+            type="button"
+            onClick={() => setHide(!hide)}
+            className="absolute indent-5 top-[50%] right-2 text-gray-500 dark:text-gray-300"
+          >
+            {hide ? "Show" : "Hide"}
+          </button>
         </div>
         <div className="my-2 text-sm">
           {/* TODO "error" */}
