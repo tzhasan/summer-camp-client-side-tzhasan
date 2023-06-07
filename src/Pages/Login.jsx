@@ -1,17 +1,41 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../Hooks/UseAuth';
 import useTitle from '../Hooks/useTitle';
+import { useForm } from 'react-hook-form';
+import Swal from 'sweetalert2';
 
 const Login = () => {
+  const navigate = useNavigate()
       useTitle("Login");
-  const {user} = useAuth()
+  const { user, signIn } = useAuth();
+   // Submit
+  const { register, handleSubmit } = useForm();
+
+
+  const onSubmit = (data) => { 
+    signIn(data.email, data.password)
+      .then(result => {
+        const user = result.user;
+        Swal.fire({
+          position: "top-center",
+          icon: "success",
+          title: "Logged in Successfully",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+        // TODO: reset()
+          navigate('/')
+        
+      })
+  }
   return (
     <div>
-      <div>{/* <Toaster /> */}</div>
-
-      <form className="w-[80%] mx-auto mt-20 mb-10">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-[80%] mx-auto mt-20 mb-10"
+      >
         <h1 className="text-2xl md:4xl font-bold text-center my-10">
           Login here
         </h1>
@@ -22,7 +46,7 @@ const Login = () => {
           </label>
           <input
             type="email"
-            name="email"
+            {...register("email", { required: "Email Address is required" })}
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="name@email.com"
             required
@@ -34,7 +58,7 @@ const Login = () => {
           </label>
           <input
             type="password"
-            name="password"
+            {...register("password", { required: true, maxLength: 20 })}
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />

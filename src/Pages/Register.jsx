@@ -2,9 +2,12 @@ import React, { useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
+import useAuth from "../Hooks/UseAuth";
+import { updateProfile } from "firebase/auth";
+import Swal from "sweetalert2";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
-console.log(img_hosting_token);
 // TODO: all requirments labels need to add red color *
+// TODO: Send gender info
 
 const Register = () => {
   const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
@@ -13,6 +16,7 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const [error2, setError2] = useState("");
+  const { createAccount, updateUserProfile } = useAuth();
 
   useEffect(() => {
     if (password2 === password) {
@@ -45,42 +49,60 @@ const Register = () => {
   };
 
   // Submit
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, } = useForm();
+
+
   const onSubmit = (data) => {
-    console.log(data);
+    console.log({data});
     if (data.password2 !== data.password) {
       setError2("Password don't match");
       return;
     } else {
       setError2("");
     }
-    // image upload
-    const formData = new FormData();
-    formData.append("image", data.file[0]);
+    const {
+      name,
+      password,
+      email,
+      photoURL = "https://images.unsplash.com/photo-1686044662204-ea3b6a7a0336?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80",
+    } = data;
+    console.log(name, password, email, photoURL);
+    createAccount(email, password)
+      .then(result => {
+        const loggedUser = result.user
+        console.log(loggedUser);
+         updateUserProfile(data.name, photoURL).then(() => {
+           const saveUser = { name: data.name, email: data.email,photoURL: photoURL };
+           fetch("http://localhost:5000/users", {
+             method: "POST",
+             headers: {
+               "content-type": "application/json",
+             },
+             body: JSON.stringify(saveUser),
+           })
+             .then((res) => res.json())
+             .then((data) => {
+               if (data.insertedId) {
+                //  reset();
+                 Swal.fire({
+                   position: "top-end",
+                   icon: "success",
+                   title: "User created successfully.",
+                   showConfirmButton: false,
+                   timer: 1500,
+                 });
+                //  navigate("/");
+               }
+             });
+         });
 
-    fetch(img_hosting_url, {
-      method: "POST",
-      body: formData,
-    }).then((res) => res.json())
-      .then(imgRes => {
-        if (imgRes.success) { 
-          const imgURL = imgRes.data.display_url;
-          const { name, email,gender } = data;
-          const newUser = {
-            name,
-            email,
-            gender,
-            image: imgURL,
-          };
-          fetch("http://localhost:5000/users", {
-            method: "POST",
-            headers: { "content-type": "application/json" },
-            body: JSON.stringify(newUser)
-          })
-            .then(res => res.json())
-          .then(data=> console.log(data.user))
-        }
-    })
+
+      })
+      .catch(err => { 
+        console.log(err.message);
+      })
+    
+
     
   };
 
@@ -138,8 +160,8 @@ const Register = () => {
           </span>
           <div>
             <select className="w-40" {...register("gender")}>
-              <option value="female">female</option>
               <option value="male">male</option>
+              <option value="female">female</option>
               <option value="other">Other</option>
             </select>
           </div>

@@ -3,9 +3,10 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
 import logo from '../../src/assets/logo.png'
+import useAuth from "../Hooks/UseAuth";
 
 const Navbar = () => {
-  const { user, logOut } = useContext(AuthContext)
+  const { user, logOut } = useAuth()
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
     toggleTheme,
@@ -17,9 +18,9 @@ const Navbar = () => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-  // const signingOut = () => {
-  //   logOut();
-  // };
+  const signingOut = () => {
+    logOut();
+  };
   return (
     <div className="navbar bg-slate-200 bg-opacity-80 md:sticky md:top-0 md:z-50">
       <div className="navbar-start md:mx-10 mx-2">
@@ -217,13 +218,13 @@ const Navbar = () => {
         )}
         {user ? (
           <p
-            // onClick={signingOut}
-            className="projectMainButton"
+            onClick={signingOut}
+            className="projectMainButton cursor-pointer"
           >
             Log out
           </p>
         ) : (
-          <Link to="/login" className="projectMainButton">
+          <Link to="/login" className="projectMainButton cursor-pointer">
             Log in
           </Link>
         )}
