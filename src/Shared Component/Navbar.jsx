@@ -2,6 +2,7 @@ import React, { useContext, useState } from "react";
 import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
+import logo from '../../src/assets/logo.png'
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
@@ -106,8 +107,7 @@ const Navbar = () => {
         </div>
         {/*  */}
         <div className="flex items-center ">
-        {/* TODO:Logo */}
-          <img className="w-[8%] ml-2" src="" alt="" />
+          <img className="w-[8%] ml-2" src={logo} alt="" />
           <Link
             to={"/"}
             className="btn btn-ghost normal-case text-md md:text-2xl text-gray-600 hover:bg-transparent  hover:text-sky-600"

@@ -1,74 +1,188 @@
-import React from 'react';
-import { FcGoogle } from 'react-icons/fc';
-import { Link } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { FcGoogle } from "react-icons/fc";
+import { Link } from "react-router-dom";
+import { useForm } from "react-hook-form";
+const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
+console.log(img_hosting_token);
+// TODO: all requirments labels need to add red color *
 
 const Register = () => {
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+
+  const [password, setPassword] = useState("");
+  const [password2, setPassword2] = useState("");
+  const [error, setError] = useState("");
+  const [error2, setError2] = useState("");
+
+  useEffect(() => {
+    if (password2 === password) {
+      setError2("");
+    } else {
+      setError2("Password does not match");
+    }
+  }, [password, password2]);
+
+  const handlePasswordChange = (event) => {
+    const newPassword = event.target.value;
+    setPassword(newPassword);
+
+    if (
+      !/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/.test(
+        newPassword
+      )
+    ) {
+      setError(
+        "Password must be at least 6 characters long, contain at least one lowercase letter, one uppercase letter, and one special character."
+      );
+    } else {
+      setError("");
+    }
+  };
+
+  const handlePasswordConfirm = (event) => {
+    const newPassword = event.target.value;
+    setPassword2(newPassword);
+  };
+
+  // Submit
+  const { register, handleSubmit } = useForm();
+  const onSubmit = (data) => {
+    console.log(data);
+    if (data.password2 !== data.password) {
+      setError2("Password don't match");
+      return;
+    } else {
+      setError2("");
+    }
+    // image upload
+    const formData = new FormData();
+    formData.append("image", data.file[0]);
+
+    fetch(img_hosting_url, {
+      method: "POST",
+      body: formData,
+    }).then((res) => res.json())
+      .then(imgRes => {
+        if (imgRes.success) { 
+          const imgURL = imgRes.data.display_url;
+          const { name, email,gender } = data;
+          const newUser = {
+            name,
+            email,
+            gender,
+            image: imgURL,
+          };
+          fetch("http://localhost:5000/users", {
+            method: "POST",
+            headers: { "content-type": "application/json" },
+            body: JSON.stringify(newUser)
+          })
+            .then(res => res.json())
+          .then(data=> console.log(data.user))
+        }
+    })
+    
+  };
+
   return (
     <div>
       <div></div>
-      <form className="w-[80%] mx-auto mt-20 mb-10">
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="w-[80%] mx-auto mt-20 mb-10"
+      >
         <h1 className="text-2xl md:4xl font-bold text-center my-10">
           Register
         </h1>
 
         <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
             Your name
           </label>
           <input
+            {...register("name", { required: true, maxLength: 20 })}
             type="text"
-            name="name"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Bill Gates"
             required
           />
         </div>
         <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
             Your email
           </label>
           <input
             type="email"
-            name="email"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            {...register("email", { required: "Email Address is required" })}
+            // aria-invalid={errors.mail ? "true" : "false"}
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="name@email.com"
             required
           />
         </div>
         <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
             Photo URL (Optional)
           </label>
           <input
-            type="text"
-            name="photo"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            {...register("file")}
+            type="file"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Photo URL Jpg/png/webp"
           />
         </div>
+        {/* gender */}
+        <div className="my-6 flex gap-4 items-center ">
+          <span className="block  text-lg font-medium text-gray-900 dark:text-white">
+            Gender
+          </span>
+          <div>
+            <select className="w-40" {...register("gender")}>
+              <option value="female">female</option>
+              <option value="male">male</option>
+              <option value="other">Other</option>
+            </select>
+          </div>
+        </div>
+        {/* gender */}
+
+        {/* password */}
         <div className="mb-6">
-          <label className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
             Your password
           </label>
           <input
+            {...register("password", { required: true, maxLength: 20 })}
+            onChange={handlePasswordChange}
             type="password"
-            name="password"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />
+          {error && <div className="text-red-600">{error}</div>}
         </div>
-        <div className="my-2 text-sm">
-          {/* TODO error */}
-          <p className="text-red-600"></p>
+        <div className="mb-6">
+          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+            Confirm Password
+          </label>
+          <input
+            {...register("password2", { required: true, maxLength: 20 })}
+            onChange={handlePasswordConfirm}
+            type="password"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            required
+          />
+          {error2 && <div className="text-red-600">{error2}</div>}
         </div>
+        {/* password */}
+
         <button
           type="submit"
-          className="text-white w-full bg-[#380fb6] hover:bg-[#250681] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm md:text-xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+          className="text-white w-full bg-[#380fb6] hover:bg-[#250681] focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-lg md:text-xl px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
         >
           Register new account
         </button>
 
-        <div className="my-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+        <div className="my-4 text-lg font-medium text-gray-900 dark:text-gray-300">
           Already have account ?{" "}
           <Link
             to="/login"
@@ -83,7 +197,7 @@ const Register = () => {
 
         <button
           // onClick={handleGoogleLogin}
-          className="btn bg-[#380fb6] hover:bg-[#250681] text-sm md:text-xl text-white w-full my-4"
+          className="btn bg-[#380fb6] hover:bg-[#250681] text-lg md:text-xl text-white w-full my-4"
         >
           {" "}
           <FcGoogle className="mr-2 text-3xl"></FcGoogle> Sign in With Google
