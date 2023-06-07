@@ -5,6 +5,7 @@ import {
    getAuth,
    onAuthStateChanged,
    signInWithEmailAndPassword,
+   signInWithPopup,
    signOut,
    updateProfile,
   
@@ -40,7 +41,12 @@ const AuthProvider = ({ children }) => {
        displayName: name,
        photoURL: photo,
      });
-   };
+  };
+  
+  const googleSignIn = () => {
+    setLoading(true);
+    return signInWithPopup(auth, googleProvider);
+  };
 
 useEffect(() => {
   const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
@@ -59,6 +65,7 @@ useEffect(() => {
     logOut,
     signIn,
     updateUserProfile,
+    googleSignIn,
   };
   return (
     <AuthContext.Provider value={authInfo}>{children}</AuthContext.Provider>

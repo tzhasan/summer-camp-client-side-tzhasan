@@ -26,6 +26,7 @@ const Login = () => {
           timer: 1500,
         });
         // TODO: reset()
+        // reset()
           navigate('/')
         
       })
