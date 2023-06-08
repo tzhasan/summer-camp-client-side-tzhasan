@@ -14,12 +14,18 @@ const {user} = useContext(AuthContext)
     reset
   } = useForm();
   const onSubmit = async (data) => {
-    const parseFloatPrice = parseFloat(data.price) 
-    const parseFloatSeats = parseFloat(data.seats); 
+    const totalseats = parseFloat(data.seats);
+    const enrolled = parseFloat(0)
     const newData = {
-      ...data , price: parseFloatPrice,seats: parseFloatSeats, status: "Pending", enrolled: parseFloat(0), feedback:'Empty'
-    }
-    console.log(newData);
+      ...data,
+      price: parseFloat(data.price),
+      status: "Pending",
+      enrolled: enrolled,
+      feedback: "Empty",
+      totalseats: totalseats,
+      seats: parseFloat(totalseats - enrolled),
+    };
+    // console.log(newData);
     await axiosSecure.post('/instructor/addaclass', { newData })
       .then(res => {
         console.log(res.data);
@@ -122,7 +128,7 @@ const {user} = useContext(AuthContext)
               required
             />
             <label className="peer-focus:font-medium absolute text-md md:text-2xl text-gray-500 dark:text-gray-400 duration-300 transform -translate-y-6 scale-75 top-3 -z-10 origin-[0] peer-focus:left-0 peer-focus:text-sky-600 peer-focus:dark:text-sky-600 peer-placeholder-shown:scale-100 peer-placeholder-shown:translate-y-0 peer-focus:scale-75 peer-focus:-translate-y-6">
-              Available Seats
+              Total Seats
             </label>
           </div>
           <div className="relative z-0 w-full mb-6 group">

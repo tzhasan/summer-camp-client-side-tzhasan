@@ -93,7 +93,7 @@ const Navbar = () => {
                     ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
-                to={"/classes"}
+                to={"/classesPage"}
               >
                 Classes
               </NavLink>
@@ -179,7 +179,7 @@ const Navbar = () => {
                   ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
-              to={"/classes"}
+              to={"/classesPage"}
             >
               Classes
             </NavLink>

@@ -11,6 +11,7 @@ import AddaClass from "../Pages/Dashboard/AddAClass/AddaClass";
 import MyClasses from "../Pages/Dashboard/MyClasses/MyClasses";
 import MySelectedClasses from "../Pages/Dashboard/MySelectedClasses/MySelectedClasses";
 import EnrolledClasses from "../Pages/Dashboard/EnrolledClasses/EnrolledClasses";
+import ClassesPage from "../Pages/Classes/ClassesPage";
 
 const router = createBrowserRouter([
   {
@@ -28,6 +29,10 @@ const router = createBrowserRouter([
       {
         path: "/register",
         element: <Register></Register>,
+      },
+      {
+        path: "/classesPage",
+        element: <ClassesPage></ClassesPage>,
       },
     ],
   },
