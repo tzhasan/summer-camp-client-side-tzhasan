@@ -4,6 +4,7 @@ import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useInstractor from "../../Hooks/useInstractor";
 import useStudent from "../../Hooks/useStudent";
+import Loading from "../../Shared Component/Loading";
 
 const Dhashboard = () => {
   const { user } = useContext(AuthContext);
@@ -31,11 +32,18 @@ const Dhashboard = () => {
           {isAdmin
             ? "Admin Dashboard"
             : isInstructor
-            ? "Instructor Dashboard"
-            : "Student Dashboard"}
+              ? "Instructor Dashboard"
+              : isStudent?
+             "Student Dashboard" : "Dashboard Loading"}
         </h1>
         <ul className="menu p-4 w-80 h-full text-base-content">
           {/* Sidebar content here */}
+          {!isStudent && !isAdmin && !isInstructor && (
+            <li>
+              {" "}
+              <Loading></Loading>
+            </li>
+          )}
           {isAdmin && user?.email && (
             <>
               <li className="text1">
@@ -70,6 +78,7 @@ const Dhashboard = () => {
               </li>
             </>
           )}
+
           <div className="divider"></div>
           <li className="text1 my-4 ">
             <Link to={"/"}>Back to Home Page</Link>

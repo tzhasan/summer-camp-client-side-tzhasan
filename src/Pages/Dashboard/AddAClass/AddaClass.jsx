@@ -11,12 +11,13 @@ const {user} = useContext(AuthContext)
     register,
     formState: { errors },
     handleSubmit,
+    reset
   } = useForm();
   const onSubmit = async (data) => {
     const parseFloatPrice = parseFloat(data.price) 
     const parseFloatSeats = parseFloat(data.seats); 
     const newData = {
-      ...data , price: parseFloatPrice,seats: parseFloatSeats, status: "pending", enrolled: parseFloat(0)
+      ...data , price: parseFloatPrice,seats: parseFloatSeats, status: "Pending", enrolled: parseFloat(0), feedback:'Empty'
     }
     console.log(newData);
     await axiosSecure.post('/instructor/addaclass', { newData })
@@ -30,7 +31,8 @@ const {user} = useContext(AuthContext)
           showConfirmButton: false,
           timer: 1500,
         });
-        // refetch();
+        reset();
+
       }
       })
       .catch(err => {

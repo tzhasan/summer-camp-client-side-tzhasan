@@ -4,8 +4,8 @@ import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import useAdmin from "../../../Hooks/useAdmin";
-import useInstractor from "../../../Hooks/useInstractor";
-
+import Loading from "../../../Shared Component/Loading";
+// todo: if user already admin then change the button color 
 const ManageUsers = () => {
   const [isAdmin, isAdminLoading] = useAdmin();
   
@@ -43,7 +43,7 @@ const ManageUsers = () => {
   };
 
   if (loading) {
-    return <p>Loading...</p>;
+    return <Loading/>
   }
   return (
     <div>
@@ -61,7 +61,7 @@ const ManageUsers = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {user && isAdmin &&
+            {user?.email && isAdmin && !isAdminLoading &&
               data.map((user, i) => {
                 const isAdmin = user.role === "admin";
                 const isInstructor = user.role === "instractor";
