@@ -2,19 +2,48 @@ import React, { useContext } from "react";
 import useAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { AuthContext } from "../../../Provider/AuthProvider";
+import Swal from "sweetalert2";
+import useAdmin from "../../../Hooks/useAdmin";
+import useInstractor from "../../../Hooks/useInstractor";
+import useStudent from "../../../Hooks/useStudent";
 
 const ManageUsers = () => {
+  // todo: isAdmin delayed creation need to fix
+  const [isAdmin, isAdminLoading] = useAdmin();
+  const [isInstructor] = useInstractor();
+  
   const [axiosSecure] = useAxiosSecure();
   const { user, loading } = useContext(AuthContext);
 
-  const { data } = useQuery({
+  const { data, refetch } = useQuery({
     queryKey: ["allusers"],
     queryFn: async () => {
       const res = await axiosSecure.get("/usersFromAdmin/users");
       return res.data;
     },
   });
-  console.log(data);
+
+  // Change Role factch
+  const handleChangeRole = async (role, id, name) => {
+    await axiosSecure
+      .patch(`/changeUserRole/${id}`, { role })
+      .then((res) => {
+        const update = res.data;
+        if (update.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: `${name} is ${role} now !!`,
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          refetch();
+        }
+      })
+      .catch((err) => {
+        console.log(err.message);
+      });
+  };
 
   if (loading) {
     return <p>Loading...</p>;
@@ -37,11 +66,11 @@ const ManageUsers = () => {
             {/* row 1 */}
             {user &&
               data.map((user, i) => {
+                const isAdmin = user.role === "admin";
+                const isInstructor = user.role === "instractor";
                 return (
                   <tr key={i} className="text-lg">
-                    <th>
-                      <td>{i + 1}</td>
-                    </th>
+                    <th>{i + 1}</th>
                     <td>
                       <div className="flex items-center space-x-3">
                         <div className="avatar">
@@ -59,10 +88,28 @@ const ManageUsers = () => {
                     </td>
                     <td className="font-bold">{user?.role}</td>
                     <td>
-                      <button className="projectMainButton">Admin</button>
+                      <button
+                        onClick={() =>
+                          handleChangeRole("admin", user._id, user.name)
+                        }
+                        className={`projectMainButton ${
+                          isAdmin ? "disabled" : ""
+                        }`}
+                      >
+                        Admin
+                      </button>
                     </td>
                     <th>
-                      <button className="projectMainButton">Instructor</button>
+                      <button
+                        onClick={() =>
+                          handleChangeRole("instractor", user._id, user.name)
+                        }
+                        className={`projectMainButton ${
+                          isInstructor ? "disabled" : ""
+                        }`}
+                      >
+                        Instractor
+                      </button>
                     </th>
                   </tr>
                 );

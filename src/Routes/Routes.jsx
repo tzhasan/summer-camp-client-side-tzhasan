@@ -39,6 +39,22 @@ const router = createBrowserRouter([
         path: "/dashboard/manageusers",
         element: <ManageUsers></ManageUsers>,
       },
+      {
+        path: "/dashboard/addaclass",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "/dashboard/myclasses",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "/dashboard/myselectedclasses",
+        element: <ManageUsers></ManageUsers>,
+      },
+      {
+        path: "/dashboard/enrolledclasses",
+        element: <ManageUsers></ManageUsers>,
+      },
     ],
   },
 ]);

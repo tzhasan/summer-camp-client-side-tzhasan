@@ -12,7 +12,7 @@ import {
 } from "firebase/auth";
 import app from '../Firebase/config.firbase';
 
-export const AuthContext = createContext(null)
+export const AuthContext = createContext()
 
 const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
@@ -65,7 +65,6 @@ useEffect(() => {
       })
         .then((res) => res.json())
         .then((data) => {
-          console.log("client side console token", data);
           localStorage.setItem("token", data.token);
 
           setLoading(false);

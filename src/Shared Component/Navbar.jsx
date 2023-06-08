@@ -5,16 +5,21 @@ import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
 import logo from '../../src/assets/logo.png'
 import useAuth from "../Hooks/UseAuth";
 import { ImUserCheck } from "react-icons/im";
+import useAdmin from "../Hooks/useAdmin";
+import useInstractor from "../Hooks/useInstractor";
+import useStudent from "../Hooks/useStudent";
 
 const Navbar = () => {
   const { user, logOut } = useContext(AuthContext)
-  console.log(user?.photoURL);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {
     toggleTheme,
     theme,
   } = useContext(MoodContext)
 
+  const [isAdmin] = useAdmin()
+  const [isInstructor] = useInstractor()
+  const [isStudent] = useStudent()
  
 
   const toggleMenu = () => {
@@ -101,7 +106,14 @@ const Navbar = () => {
                     ? "text-sky-600 hover:bg-transparent"
                     : "active:bg-transparent hover:bg-transparent"
                 }
-                to={"/dashboard/manageclasses"}
+                to={
+                  isAdmin
+                    ? "/dashboard/manageclasses"
+                    : isInstructor
+                    ? "/dashboard/myclasses"
+                    : "/dashboard/enrolledclasses"
+                }
+                exact
               >
                 Dashboard
               </NavLink>
@@ -181,7 +193,14 @@ const Navbar = () => {
                   ? "text-sky-600 hover:bg-transparent"
                   : "active:bg-transparent hover:bg-transparent"
               }
-              to={"/dashboard/manageclasses"}
+              to={
+                isAdmin
+                  ? "/dashboard/manageclasses"
+                  : isInstructor
+                  ? "/dashboard/myclasses"
+                  : "/dashboard/enrolledclasses"
+              }
+              exact
             >
               Dashboard
             </NavLink>
