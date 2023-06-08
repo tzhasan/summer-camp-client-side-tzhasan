@@ -195,7 +195,7 @@ const Navbar = () => {
               }
               to={
                 isAdmin
-                  ? "/dashboard/manageclasses"
+                  ? "/dashboard/manageusers"
                   : isInstructor
                   ? "/dashboard/myclasses"
                   : "/dashboard/enrolledclasses"

@@ -5,12 +5,9 @@ import { AuthContext } from "../../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import useAdmin from "../../../Hooks/useAdmin";
 import useInstractor from "../../../Hooks/useInstractor";
-import useStudent from "../../../Hooks/useStudent";
 
 const ManageUsers = () => {
-  // todo: isAdmin delayed creation need to fix
   const [isAdmin, isAdminLoading] = useAdmin();
-  const [isInstructor] = useInstractor();
   
   const [axiosSecure] = useAxiosSecure();
   const { user, loading } = useContext(AuthContext);
@@ -64,7 +61,7 @@ const ManageUsers = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {user &&
+            {user && isAdmin &&
               data.map((user, i) => {
                 const isAdmin = user.role === "admin";
                 const isInstructor = user.role === "instractor";
