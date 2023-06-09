@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import Loading from '../../../Shared Component/Loading';
 import Swal from 'sweetalert2';
+import { Link } from 'react-router-dom';
 
 const MySelectedClasses = () => {
   const {user} = useContext(AuthContext)
@@ -74,16 +75,15 @@ const MySelectedClasses = () => {
                     <td className="font-bold">{course?.instructorname}</td>
                     <td className="font-bold">{course?.price}</td>
                     <td>
-                      <button
-                        onClick={() =>
-                          handlePay("admin", course._id, course.name)
-                        }
-                        className={`projectMainButton ${
-                          course.enrolled ? "disabled" : ""
-                        }`}
-                      >
-                        Pay
-                      </button>
+                      <Link to={`/dashboard/payment/${course?.price}`}>
+                        <button
+                          className={`projectMainButton ${
+                            course.enrolled ? "disabled" : ""
+                          }`}
+                        >
+                          Pay
+                        </button>
+                      </Link>
                     </td>
                     <th>
                       <button

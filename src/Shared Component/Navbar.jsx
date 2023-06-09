@@ -111,7 +111,7 @@ const Navbar = () => {
                     ? "/dashboard/manageclasses"
                     : isInstructor
                     ? "/dashboard/myclasses"
-                    : "/dashboard/enrolledclasses"
+                    : "/dashboard/myselectedclasses"
                 }
                 exact
               >
@@ -199,7 +199,7 @@ const Navbar = () => {
                     ? "/dashboard/manageusers"
                     : isInstructor
                     ? "/dashboard/myclasses"
-                    : "/dashboard/enrolledclasses"
+                    : "/dashboard/myselectedclasses"
                 }
                 exact
               >

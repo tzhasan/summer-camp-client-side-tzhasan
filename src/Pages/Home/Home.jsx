@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import useTitle from '../../Hooks/useTitle';
+import SliderSection from './SliderSection';
 
 const Home = () => {
   useTitle("Home");
@@ -7,12 +8,13 @@ const Home = () => {
 
 
   return (
-    <div>
-      Home page
-      <div>
-        
-      </div>
-    </div>
+    <>
+      
+        <SliderSection></SliderSection>
+
+      
+    </>
+    
   );
 };
 
