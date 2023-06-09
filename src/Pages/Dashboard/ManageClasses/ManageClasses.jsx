@@ -32,7 +32,7 @@ const ManageClasses = () => {
             timer: 2000,
           });
           refetch();
-          if (status === "Denied") {
+          if (status === "Denied" || status === "Approved") {
             window.my_modal_5.showModal();
           }
         }

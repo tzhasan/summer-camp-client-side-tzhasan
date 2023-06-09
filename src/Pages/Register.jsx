@@ -53,7 +53,7 @@ const Register = () => {
   };
 
   // Submit
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
     console.log({ data });
@@ -98,7 +98,7 @@ const Register = () => {
                   showConfirmButton: false,
                   timer: 1500,
                 });
-                // reset();
+                reset();
                 navigate("/");
               }
             });

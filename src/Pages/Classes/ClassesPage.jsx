@@ -69,14 +69,14 @@ const ClassesPage = () => {
         All Classes by Our Expert Instructors
       </h2>
       {/* cards */}
-      <div className="p-10 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8">
+      <div className="p-10 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8 ">
         {
           data &&
           data.map((course) => {
             return (
               <div
                 key={course._id}
-                className={`card p-1 w-full ${
+                className={`card p-1 w-full group ${
                   course.availableSeats <= 0 ? "bg-red-500" : "bg-green-200"
                 } shadow-xl image-full`}
               >
