@@ -61,7 +61,7 @@ const ManageUsers = () => {
           </thead>
           <tbody>
             {/* row 1 */}
-            {user?.email && isAdmin && !isAdminLoading &&
+            {user?.email && isAdmin && !isAdminLoading && data &&
               data.map((user, i) => {
                 const isAdmin = user.role === "admin";
                 const isInstructor = user.role === "instractor";

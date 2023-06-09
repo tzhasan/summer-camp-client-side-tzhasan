@@ -67,7 +67,7 @@ const Register = () => {
       name,
       password,
       email,
-      photoURL = "https://images.unsplash.com/photo-1686044662204-ea3b6a7a0336?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1888&q=80",
+      photoURL,
     } = data;
     console.log(name, password, email, photoURL);
     createAccount(email, password)
@@ -187,8 +187,8 @@ const Register = () => {
             Photo URL (Optional)
           </label>
           <input
-            {...register("file")}
-            type="file"
+            {...register("photoURL")}
+            type="text"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Photo URL Jpg/png/webp"
           />

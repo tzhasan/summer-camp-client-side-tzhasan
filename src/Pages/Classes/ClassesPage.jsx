@@ -1,39 +1,84 @@
-import React, { useContext, useState } from 'react';
-import useAxiosSecure from '../../Hooks/UseAxiosSecure';
-import { useQuery } from '@tanstack/react-query';
+import React, { useContext, useState } from "react";
+import useAxiosSecure from "../../Hooks/UseAxiosSecure";
+import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../src/Shared Component/Loading";
-import { AuthContext } from '../../Provider/AuthProvider';
-
+import { AuthContext } from "../../Provider/AuthProvider";
+import Swal from "sweetalert2";
+import { useNavigate } from "react-router-dom";
+// todo: without user how to render data!!
 
 const ClassesPage = () => {
-  const { user, loading } = useContext(AuthContext)
-  const [axiosSecure] = useAxiosSecure()
+  const { user, loading } = useContext(AuthContext);
+  const [axiosSecure] = useAxiosSecure();
+  const navigate = useNavigate()
 
   // get all classes for Classes page
-  const {data, isLoading} = useQuery({
-    queryKey: ['classesPage', user?.email],
+  const { data, isLoading } = useQuery({
+    queryKey: ["classesPage"],
     queryFn: async () => {
       const res = await axiosSecure.get("/allclasses/classesPage");
-      return res.data
+      return res.data;
+    },
+  });
+
+  const handleAddCartSelect = async (course) => {
+    if (!user) {
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Login first",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      navigate('/login')
+      return
     }
-    
-  })
-  console.log(user?.email);
+    const selectedCourse = {
+      studentName: user.displayName,
+      studentEmail: user.email,
+      studentImg: user.photoURL,
+      courseName: course.coursename,
+      instructorEmail: course.email,
+      imgurl: course.imgurl,
+      instructorname: course.instructorname,
+      price: course.price,
+      courseId: course._id,
+      enrolled: false,
+    };
+    console.log(selectedCourse);
+    await axiosSecure
+      .post(`/addtocart`, selectedCourse)
+      .then(() => {
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Course Selected",
+          showConfirmButton: false,
+          timer: 1500,
+        });
+      })
+      .catch((err) => console.log(err.message));
+  }
 
   if (loading) {
     return <Loading />;
   }
   return (
     <div>
-      <h2 className='text-xl md:text-3xl text-center font-semibold text-sky-600 my-6'>All Classes by Our Expert Instructors</h2>
+      <h2 className="text-xl md:text-3xl text-center font-semibold text-sky-600 my-6">
+        All Classes by Our Expert Instructors
+      </h2>
       {/* cards */}
-      <div className='p-10 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-4'>
-        { user?.email && !isLoading &&
-          data.map(course => {
+      <div className="p-10 grid grid-cols-1 md:grid-cols-3 gap-2 md:gap-8">
+        {
+          data &&
+          data.map((course) => {
             return (
               <div
                 key={course._id}
-                className="card w-full bg-sky-100 shadow-xl image-full"
+                className={`card p-1 w-full ${
+                  course.availableSeats <= 0 ? "bg-red-500" : "bg-green-200"
+                } shadow-xl image-full`}
               >
                 <figure>
                   <img src={course?.imgurl} />
@@ -46,19 +91,26 @@ const ClassesPage = () => {
                     Instructor: {course.instructorname}
                   </p>
                   <p className="text-lg md:text-2xl">
-                    Available Seats: {course.seats}
+                    Total Seats: {course.totalseats}
+                  </p>
+                  <p className="text-lg md:text-2xl">
+                    Available Seats: {course.totalseats - course.enrolled}
+                    {/* it should be dynamic from database */}
                   </p>
                   <p className="text-lg md:text-2xl">Price: ${course.price}</p>
                   <div className="card-actions justify-end">
-                    <button className="btn btn-primary projectMainButton">
+                    <button
+                      onClick={() => handleAddCartSelect(course)}
+                      className="btn btn-primary projectMainButton"
+                      disabled={course.availableSeats <= 0}
+                    >
                       Select
                     </button>
                   </div>
                 </div>
               </div>
             );
-          })
-        }
+          })}
       </div>
       {/* cards */}
     </div>

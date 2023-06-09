@@ -23,7 +23,7 @@ const {user} = useContext(AuthContext)
       enrolled: enrolled,
       feedback: "Empty",
       totalseats: totalseats,
-      seats: parseFloat(totalseats - enrolled),
+      availableSeats: parseFloat(totalseats - enrolled),
     };
     // console.log(newData);
     await axiosSecure.post('/instructor/addaclass', { newData })

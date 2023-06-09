@@ -50,7 +50,7 @@ const ManageClasses = () => {
     await axiosSecure
       .patch(`/addfeedback/admin/${modalId}`, { feedbackValue })
       .then((res) => {
-        if (res.data.modifiedCount>0) {
+        if (res.data.modifiedCount > 0) {
           Swal.fire({
             position: "top-end",
             icon: "success",
@@ -105,7 +105,13 @@ const ManageClasses = () => {
                     Email: {course.email}
                   </p>
                   <p className=" text-lg md:text-xl mb-4  text-gray-900">
-                    Available Seats: {course.seats}
+                    Total Seats: {course.totalseats}
+                  </p>
+                  <p className=" text-lg md:text-xl mb-4  text-gray-900">
+                    Enrolled: {course.enrolled}
+                  </p>
+                  <p className=" text-lg md:text-xl mb-4  text-gray-900">
+                    Available Seats: {course.totalseats - course.enrolled}
                   </p>
                   <p className=" text-lg md:text-xl mb-4  text-gray-900">
                     Price: ${course.price}

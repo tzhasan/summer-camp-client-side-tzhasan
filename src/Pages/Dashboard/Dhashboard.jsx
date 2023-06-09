@@ -1,5 +1,5 @@
 import React, { useContext } from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useInstractor from "../../Hooks/useInstractor";
@@ -42,49 +42,93 @@ const Dhashboard = () => {
           </h1>
           <ul className="menu p-4 w-80 h-full text-base-content">
             {/* Sidebar content here */}
-            {!isStudent && !isAdmin && !isInstructor && (
-              <li>
-                {" "}
-                <Loading></Loading>
-              </li>
-            )}
             {isAdmin && user?.email && (
               <>
                 <li className="text1">
-                  <Link to={"/dashboard/manageusers"}>Manage Users</Link>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/manageusers"}
+                  >
+                    Manage Users
+                  </NavLink>
                 </li>
                 <li className="text1">
-                  <Link to={"/dashboard/manageclasses"}>Manage Classes</Link>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/manageclasses"}
+                  >
+                    Manage Classes
+                  </NavLink>
                 </li>
               </>
             )}
             {isInstructor && user?.email && (
               <>
                 <li className="text1">
-                  <Link to={"/dashboard/myclasses"}>My Classes</Link>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/myclasses"}
+                  >
+                    My Classes
+                  </NavLink>
                 </li>
                 <li className="text1">
-                  <Link to={"/dashboard/addaclass"}>Add a Class</Link>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/addaclass"}
+                  >
+                    Add a Class
+                  </NavLink>
                 </li>
               </>
             )}
             {!isAdmin && !isInstructor && isStudent && (
               <>
                 <li className="text1">
-                  <Link to={"/dashboard/myselectedclasses"}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/myselectedclasses"}
+                  >
                     My Selected Classes
-                  </Link>
+                  </NavLink>
                 </li>
                 <li className="text1">
-                  <Link to={"/dashboard/enrolledclasses"}>
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/enrolledclasses"}
+                  >
                     My Enrolled Classes
-                  </Link>
+                  </NavLink>
                 </li>
               </>
             )}
 
             <div className="divider"></div>
-            <li className="text1 my-4 ">
+            <li className="text-lg md:text-xl text-gray-600 my-4 ">
               <Link to={"/"}>Back to Home Page</Link>
             </li>
           </ul>

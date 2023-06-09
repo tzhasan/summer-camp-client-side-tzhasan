@@ -12,6 +12,7 @@ import MyClasses from "../Pages/Dashboard/MyClasses/MyClasses";
 import MySelectedClasses from "../Pages/Dashboard/MySelectedClasses/MySelectedClasses";
 import EnrolledClasses from "../Pages/Dashboard/EnrolledClasses/EnrolledClasses";
 import ClassesPage from "../Pages/Classes/ClassesPage";
+import Instructor from "../Pages/Instructor/Instructor";
 
 const router = createBrowserRouter([
   {
@@ -33,6 +34,10 @@ const router = createBrowserRouter([
       {
         path: "/classesPage",
         element: <ClassesPage></ClassesPage>,
+      },
+      {
+        path: "/instructors",
+        element: <Instructor/>,
       },
     ],
   },

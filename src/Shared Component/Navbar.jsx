@@ -185,26 +185,28 @@ const Navbar = () => {
             </NavLink>
           </li>
 
-          <li className="hover:text-sky-600">
-            <NavLink
-              onClick={() => setIsMenuOpen(false)}
-              className={({ isActive }) =>
-                isActive
-                  ? "text-sky-600 hover:bg-transparent"
-                  : "active:bg-transparent hover:bg-transparent"
-              }
-              to={
-                isAdmin
-                  ? "/dashboard/manageusers"
-                  : isInstructor
-                  ? "/dashboard/myclasses"
-                  : "/dashboard/enrolledclasses"
-              }
-              exact
-            >
-              Dashboard
-            </NavLink>
-          </li>
+          {user && (
+            <li className="hover:text-sky-600">
+              <NavLink
+                onClick={() => setIsMenuOpen(false)}
+                className={({ isActive }) =>
+                  isActive
+                    ? "text-sky-600 hover:bg-transparent"
+                    : "active:bg-transparent hover:bg-transparent"
+                }
+                to={
+                  isAdmin
+                    ? "/dashboard/manageusers"
+                    : isInstructor
+                    ? "/dashboard/myclasses"
+                    : "/dashboard/enrolledclasses"
+                }
+                exact
+              >
+                Dashboard
+              </NavLink>
+            </li>
+          )}
         </ul>
       </div>
       {/* Large screen manu */}
