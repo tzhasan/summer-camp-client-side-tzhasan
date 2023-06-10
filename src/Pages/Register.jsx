@@ -2,7 +2,6 @@ import React, { useContext, useEffect, useState } from "react";
 import { FcGoogle } from "react-icons/fc";
 import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import useAuth from "../Hooks/UseAuth";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Provider/AuthProvider";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;

@@ -11,7 +11,6 @@ const { data, isLoading, refetch } = useQuery({
     return res.data;
   },
 });
-  console.log(data);
 
   return (
     <div>
