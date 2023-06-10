@@ -80,6 +80,8 @@ courseId } = data
         instructorEmail,
         instructorname,
         courseId,
+        paymentMethod: paymentIntent.payment_method_types[0],
+        created: paymentIntent.created,
       };
       axiosSecure.post("/PaymentInfo", paymentInfo)
         .then(res => {

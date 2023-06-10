@@ -139,6 +139,18 @@ const Dhashboard = () => {
                     <img className="w-6" src={selected} /> My Enrolled Classes
                   </NavLink>
                 </li>
+                <li className="text1">
+                  <NavLink
+                    className={({ isActive }) =>
+                      isActive
+                        ? "text-sky-600 hover:bg-transparent"
+                        : "text-gray-400"
+                    }
+                    to={"/dashboard/paymentHistory"}
+                  >
+                    <img className="w-6" src={selected} /> Payment History
+                  </NavLink>
+                </li>
               </>
             )}
 

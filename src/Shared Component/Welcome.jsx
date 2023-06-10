@@ -43,12 +43,12 @@ const Welcome = () => {
         opacity: 0,
         duration: 1000,
         easing: "easeOutExpo",
-        delay: 1000,
+        delay: 2000,
       });
   }, []);
   return (
     <div>
-      <h1 className="ml11 text-center  ml12 text-3xl  md:text-6xl italic font-bold text-sky-600">
+      <h1 className="ml11 text-center  ml12 text-xl  md:text-2xl italic font-bold text-sky-600">
         <span className="text-wrapper">
           <span className="line line1"></span>
           <span className="letters ">WELLCOME TO PHONETICS</span>

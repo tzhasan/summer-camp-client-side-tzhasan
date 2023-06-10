@@ -27,8 +27,7 @@ const EnrolledClasses = () => {
               <th>No</th>
               <th>Cover</th>
               <th>Instructor</th>
-              <th>trans ID</th>
-              <th>Paid</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -55,8 +54,11 @@ const EnrolledClasses = () => {
                       </div>
                     </td>
                     <td className="font-bold">{course?.instructorname}</td>
-                    <td className="font-bold">{course?.transactionId}</td>
-                    <td className="font-bold text-green-500"> ${course?.price}</td>
+                    <td>
+                      <button className="projectMainButton">
+                        View Modules
+                      </button>
+                    </td>
                   </tr>
                 );
               })}
