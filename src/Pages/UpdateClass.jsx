@@ -1,16 +1,28 @@
-import React, { useContext, useEffect } from 'react';
-import { useForm } from "react-hook-form";
-import { AuthContext } from '../../../Provider/AuthProvider';
-import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
+import { useQuery } from '@tanstack/react-query';
+import React, { useContext } from 'react';
+import { useParams } from 'react-router-dom';
+import useAxiosSecure from '../Hooks/UseAxiosSecure';
+import useInstractor from '../Hooks/useInstractor';
+import { useForm } from 'react-hook-form';
+import { AuthContext } from '../Provider/AuthProvider';
 import Swal from 'sweetalert2';
-import Loading from '../../../Shared Component/Loading';
-import useTitle from '../../../Hooks/useTitle';
 
-const AddaClass = () => {
-  useTitle("Add Class")
-const {user,loading} = useContext(AuthContext)
+const UpdateClass = () => {
+  const {user} = useContext(AuthContext)
+  const { id } = useParams()
+  const [isInstructor] = useInstractor()
   const [axiosSecure] = useAxiosSecure()
   
+  const { data, isLoading, refetch } = useQuery({
+    queryKey: ["updateClass", isInstructor],
+    queryFn: async () => {
+      const res = await axiosSecure.get(`/classes/update/${id}`);
+      return res.data;
+    },
+  });
+
+
+  // onSubmit is called
   const {
     register,
     formState: { errors },
@@ -18,36 +30,32 @@ const {user,loading} = useContext(AuthContext)
     reset
   } = useForm();
   
-  const onSubmit = async (data) => {
-    const totalseats = parseFloat(data.seats);
-    const enrolled = parseFloat(0)
-      const newData = {
-        ...data,
-        price: parseFloat(data.price),
-        status: "Pending",
-        enrolled: enrolled,
-        feedback: "Empty",
-        instructorImg: user.photoURL,
-        totalseats: totalseats,
-        availableSeats: parseFloat(totalseats - enrolled),
-      };
-    // console.log(newData);
-    await axiosSecure.post('/instructor/addaclass', { newData })
-      .then(res => {
-        console.log(res.data);
-      if (res.data.insertedId) {
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Class Added",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        reset();
+  const onSubmit = async (formdata) => { 
+    console.log("data", formdata);
+    const newData = {
+      coursename: formdata.coursename,
+      price: parseFloat(formdata.price),
+      totalseats: parseFloat(formdata.seats),
+      imgurl: formdata.imgurl,
+    };
 
-      }
+    await axiosSecure
+      .patch(`/classes/updateData/${id}`, newData)
+      .then((res) => {
+        console.log(res.data);
+        if (res.data.modifiedCount > 0) {
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Update data successfully",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          reset();
+          refetch()
+        }
       })
-      .catch(err => {
+      .catch((err) => {
         console.log(err.error);
         Swal.fire({
           position: "top-end",
@@ -56,20 +64,19 @@ const {user,loading} = useContext(AuthContext)
           showConfirmButton: false,
           timer: 1500,
         });
-    })
-    
-
-  };
-
-  if (loading) {
-    return <Loading></Loading>
+      });
   }
-    return (
+
+
+
+  return (
+    <div>
       <div className="p-10">
         <form onSubmit={handleSubmit(onSubmit)}>
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
+                defaultValue={data?.coursename}
                 {...register("coursename", { required: true })}
                 type="text"
                 className="block py-2.5 px-0 w-full text-md md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-sky-600 focus:outline-none focus:ring-0 focus:border-sky-600 peer"
@@ -83,6 +90,7 @@ const {user,loading} = useContext(AuthContext)
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
+                defaultValue={data?.imgurl}
                 {...register("imgurl", { required: true })}
                 type="text"
                 className="block py-2.5 px-0 w-full text-md md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-sky-600 focus:outline-none focus:ring-0 focus:border-sky-600 peer"
@@ -128,6 +136,7 @@ const {user,loading} = useContext(AuthContext)
           <div className="grid md:grid-cols-2 md:gap-6">
             <div className="relative z-0 w-full mb-6 group">
               <input
+                defaultValue={data?.totalseats}
                 type="number"
                 pattern="[0-9]{3}-[0-9]{3}-[0-9]{4}"
                 {...register("seats", { required: true })}
@@ -141,6 +150,7 @@ const {user,loading} = useContext(AuthContext)
             </div>
             <div className="relative z-0 w-full mb-6 group">
               <input
+                defaultValue={data?.price}
                 type="number"
                 {...register("price", { required: true })}
                 className="block py-2.5 px-0 w-full text-md md:text-2xl text-gray-900 bg-transparent border-0 border-b-2 border-gray-300 appearance-none dark:text-white dark:border-gray-600 dark:focus:border-sky-600 focus:outline-none focus:ring-0 focus:border-sky-600 peer"
@@ -153,11 +163,12 @@ const {user,loading} = useContext(AuthContext)
             </div>
           </div>
           <button type="submit" className="projectMainButton">
-            Add Class
+            Update
           </button>
         </form>
       </div>
-    );
+    </div>
+  );
 };
 
-export default AddaClass;
+export default UpdateClass;

@@ -3,8 +3,10 @@ import Loading from '../Shared Component/Loading';
 import useAxiosSecure from '../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import { AuthContext } from '../Provider/AuthProvider';
+import useTitle from '../Hooks/useTitle';
 
 const PaymentHistry = () => {
+  useTitle("Payment History")
    const { user } = useContext(AuthContext);
    const [axiosSecure] = useAxiosSecure();
    const { data, isLoading } = useQuery({

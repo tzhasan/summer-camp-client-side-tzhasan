@@ -5,8 +5,10 @@ import { AuthContext } from '../../../Provider/AuthProvider';
 import Loading from '../../../Shared Component/Loading';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
+import useTitle from '../../../Hooks/useTitle';
 
 const MySelectedClasses = () => {
+  useTitle("Selected Classes");
   const {user} = useContext(AuthContext)
   const [axiosSecure] = useAxiosSecure()
   const { data, refetch } = useQuery({

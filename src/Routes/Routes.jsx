@@ -18,6 +18,7 @@ import InstructorRoute from "./InstructorRoute";
 import StudentRoute from "./StudentRoute";
 import Error404page from "../Pages/errorpage/Error404page";
 import PaymentHistry from "../Pages/PaymentHistry";
+import UpdateClass from "../Pages/UpdateClass";
 
 const router = createBrowserRouter([
   {
@@ -105,9 +106,13 @@ const router = createBrowserRouter([
         element: <Payment />,
       },
       {
-        path: '/dashboard/paymentHistory',
-        element: <PaymentHistry></PaymentHistry>
-      }
+        path: "/dashboard/paymentHistory",
+        element: <PaymentHistry></PaymentHistry>,
+      },
+      {
+        path: "/dashboard/updateClassOfInstructor/:id",
+        element: <UpdateClass></UpdateClass>,
+      },
     ],
   },
 ]);

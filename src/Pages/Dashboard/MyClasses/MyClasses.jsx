@@ -4,9 +4,12 @@ import useInstractor from '../../../Hooks/useInstractor';
 import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import Loading from '../../../Shared Component/Loading';
+import useTitle from '../../../Hooks/useTitle';
+import { Link } from 'react-router-dom';
 // todo: should work on update button
 const MyClasses = () => {
-  const { user,loading } = useContext(AuthContext)
+  useTitle("My Classes")
+  const { user } = useContext(AuthContext)
   const [isInstructor] = useInstractor()
   const [axiosSecure] = useAxiosSecure()
 
@@ -17,7 +20,6 @@ const MyClasses = () => {
         return res.data
     }
   })
-  console.log(data);
   if (!data && isLoading) {
     return <Loading/>
   }
@@ -67,19 +69,22 @@ const MyClasses = () => {
                   </span>
                 </p>
                 <p className=" text-lg md:text-xl mb-4  text-gray-900">
+                  Total Seats: {course.totalseats}
+                </p>
+                <p className=" text-lg md:text-xl mb-4  text-gray-900">
                   Total enrolled students: {course.enrolled}
+                </p>
+                <p className=" text-lg md:text-xl mb-4  text-gray-900">
+                  Available Seats: {course.availableSeats}
                 </p>
                 <p className=" text-lg md:text-xl mb-4  text-gray-900">
                   Admin's Feedback:{" "}
                   <span className="text-gray-500">{course.feedback}</span>
                 </p>
                 <div className="flex justify-center" bis_skin_checked={1}>
-                  <button
-                    onClick={() => handleChangeStatus("Approved", course._id)}
-                    className="projectMainButton"
-                  >
-                    Update
-                  </button>
+                  <Link to={`/dashboard/updateClassOfInstructor/${course._id}`}>
+                    <button className="projectMainButton">Update</button>
+                  </Link>
                 </div>
               </div>
             </div>

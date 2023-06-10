@@ -2,8 +2,10 @@ import { useQuery } from '@tanstack/react-query';
 import React from 'react';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 import Loading from '../../Shared Component/Loading';
+import useTitle from '../../Hooks/useTitle';
 
 const Instructor = () => {
+  useTitle("Instructor")
   const [axiosSecure] = useAxiosSecure();
   const { data, isLoading } = useQuery({
     queryKey: ["/allInstructors"],

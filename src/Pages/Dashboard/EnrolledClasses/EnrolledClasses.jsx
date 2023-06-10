@@ -3,8 +3,10 @@ import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../Shared Component/Loading';
 import { AuthContext } from '../../../Provider/AuthProvider';
+import useTitle from '../../../Hooks/useTitle';
 
 const EnrolledClasses = () => {
+  useTitle("Enrolled Classes")
   const {user} = useContext(AuthContext) 
   const [axiosSecure] = useAxiosSecure();
   const { data, isLoading } = useQuery({

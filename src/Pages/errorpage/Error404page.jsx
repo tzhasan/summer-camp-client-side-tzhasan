@@ -3,9 +3,10 @@ import anime from "animejs";
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/36395-lonely-404.json";
 import { Link } from 'react-router-dom';
+import useTitle from '../../Hooks/useTitle';
 
 const Error404page = () => {
-       
+       useTitle("Error")
   return (
     <div className="w-[50vw] h-[50%] mx-auto">
       <div>

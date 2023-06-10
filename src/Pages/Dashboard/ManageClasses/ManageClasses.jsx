@@ -3,8 +3,10 @@ import useAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Swal from "sweetalert2";
 import Loading from "../../../Shared Component/Loading";
+import useTitle from "../../../Hooks/useTitle";
 
 const ManageClasses = () => {
+  useTitle("Manage Classes")
   const feedbackButtonRef = useRef(null);
   const [axiosSecure] = useAxiosSecure();
   const [modalId, setModalId] = useState("");

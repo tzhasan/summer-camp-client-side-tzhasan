@@ -12,7 +12,7 @@ const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 
 const Register = () => {
   const navigate = useNavigate();
-  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+  // const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");

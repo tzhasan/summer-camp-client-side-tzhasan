@@ -1,20 +1,22 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../src/Shared Component/Loading";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
-import { useNavigate } from "react-router-dom";
+import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstractor from "../../Hooks/useInstractor";
+import useTitle from "../../Hooks/useTitle";
 // todo: without user how to render data!!
 
 const ClassesPage = () => {
+  useTitle("Classes")
   const [isAdmin] = useAdmin()
   const [isInstructor] = useInstractor()
-  console.log(isAdmin&& isAdmin);
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
+  const location = useLocation()
   const navigate = useNavigate()
 
   // get all classes for Classes page
@@ -35,7 +37,8 @@ const ClassesPage = () => {
         showConfirmButton: false,
         timer: 1500,
       });
-      navigate('/login')
+      const state = { from: location };
+      navigate("/login", { state });
       return
     }
     const selectedCourse = {

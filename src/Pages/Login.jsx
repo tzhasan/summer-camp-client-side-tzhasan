@@ -1,5 +1,5 @@
 import React, { useContext, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FcGoogle } from "react-icons/fc";
 import useAuth from '../Hooks/UseAuth';
 import useTitle from '../Hooks/useTitle';
@@ -10,11 +10,15 @@ import { AuthContext } from '../Provider/AuthProvider';
 
 // TODO: no error state after wrong pass
 const Login = () => {
-  const navigate = useNavigate()
+  const location = useLocation();
+  console.log(location.state);
+  const from = location.state?.from?.pathname || "/";
+  const navigate = useNavigate();
+
       useTitle("Login");
   const { user, signIn, googleSignIn } = useContext(AuthContext);
    // Submit
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit,reset } = useForm();
   const [hide,setHide] = useState(true)
 
   
@@ -30,10 +34,8 @@ const Login = () => {
           showConfirmButton: false,
           timer: 1500,
         });
-        // TODO: reset()
-        // reset()
-          navigate('/')
-        
+        reset();
+        navigate(from, { replace: true });
       })
   }
 
@@ -67,7 +69,7 @@ const Login = () => {
               });
             }
           });
-        // navigate(from, { replace: true });
+        navigate(from, { replace: true });
       })
       .catch((err) => {
         // setLoading(false);

@@ -11,6 +11,7 @@ import classicon from '../../../src/assets/icons/reshot-icon-class-YKDPZM8GN5.sv
 import myclasses from '../../../src/assets/icons/myclasses.svg'
 import addaclass from '../../../src/assets/icons/addaclass.svg'
 import cart from '../../../src/assets/icons/cart.svg'
+import history from '../../../src/assets/icons/history.svg'
 import selected from '../../../src/assets/icons/selected.svg'
 import Footer from "../../Shared Component/Footer";
 
@@ -29,7 +30,6 @@ const Dhashboard = () => {
   }
   return (
     <>
-      <Navbar></Navbar>
       <div className="drawer lg:drawer-open">
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center ">
@@ -148,20 +148,25 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/paymentHistory"}
                   >
-                    <img className="w-6" src={selected} /> Payment History
+                    <img className="w-6" src={history} /> Payment History
                   </NavLink>
                 </li>
               </>
             )}
 
             <div className="divider"></div>
-            <li className="text-lg md:text-xl text-gray-600 my-4 ">
-              <Link to={"/"}>Back to Home Page</Link>
+            <li className="text-lg md:text-xl text-gray-600  ">
+              <Link to={"/"}>Classes</Link>
+            </li>
+            <li className="text-lg md:text-xl text-gray-600  ">
+              <Link to={"/classesPage"}>Instractors</Link>
+            </li>
+            <li className="text-lg md:text-xl text-gray-600  ">
+              <Link to={"/"}>Home</Link>
             </li>
           </ul>
         </div>
       </div>
-      <Footer></Footer>
     </>
   );
 };
