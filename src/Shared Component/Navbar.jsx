@@ -3,7 +3,6 @@ import { Link, NavLink } from "react-router-dom";
 import { AuthContext } from "../Provider/AuthProvider";
 import { MoodContext } from "../Provider/Dark mood provider/MoodProvider";
 import logo from '../../src/assets/logo.png'
-import useAuth from "../Hooks/UseAuth";
 import { ImUserCheck } from "react-icons/im";
 import useAdmin from "../Hooks/useAdmin";
 import useInstractor from "../Hooks/useInstractor";

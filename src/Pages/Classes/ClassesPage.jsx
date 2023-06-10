@@ -5,9 +5,14 @@ import Loading from "../../../src/Shared Component/Loading";
 import { AuthContext } from "../../Provider/AuthProvider";
 import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
+import useAdmin from "../../Hooks/useAdmin";
+import useInstractor from "../../Hooks/useInstractor";
 // todo: without user how to render data!!
 
 const ClassesPage = () => {
+  const [isAdmin] = useAdmin()
+  const [isInstructor] = useInstractor()
+  console.log(isAdmin&& isAdmin);
   const { user, loading } = useContext(AuthContext);
   const [axiosSecure] = useAxiosSecure();
   const navigate = useNavigate()
@@ -45,7 +50,6 @@ const ClassesPage = () => {
       courseId: course._id,
       enrolled: false,
     };
-    console.log(selectedCourse);
     await axiosSecure
       .post(`/addtocart`, selectedCourse)
       .then(() => {
@@ -77,7 +81,11 @@ const ClassesPage = () => {
               <div
                 key={course._id}
                 className={`card p-1 w-full group ${
-                  course.availableSeats <= 0 ? "bg-red-500" : "bg-green-200"
+                  course.availableSeats <= 0
+                    ? "bg-red-500"
+                    : isAdmin || isInstructor
+                    ? "bg-red-500"
+                    : "bg-green-200"
                 } shadow-xl image-full`}
               >
                 <figure>
@@ -102,7 +110,11 @@ const ClassesPage = () => {
                     <button
                       onClick={() => handleAddCartSelect(course)}
                       className="btn btn-primary projectMainButton"
-                      disabled={course.availableSeats <= 0}
+                      disabled={
+                        course.availableSeats <= 0 ||
+                        isAdmin === true ||
+                        isInstructor === true
+                      }
                     >
                       Select
                     </button>

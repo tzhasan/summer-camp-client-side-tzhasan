@@ -42,7 +42,7 @@ const ManageUsers = () => {
       });
   };
 
-  if (loading) {
+  if (loading || !user) {
     return <Loading/>
   }
   return (
@@ -86,24 +86,22 @@ const ManageUsers = () => {
                     <td className="font-bold">{user?.role}</td>
                     <td>
                       <button
+                        disabled={isAdmin}
                         onClick={() =>
                           handleChangeRole("admin", user._id, user.name)
                         }
-                        className={`projectMainButton ${
-                          isAdmin ? "disabled" : ""
-                        }`}
+                        className={`projectMainButton btn`}
                       >
                         Admin
                       </button>
                     </td>
                     <th>
                       <button
+                        disabled={isInstructor}
                         onClick={() =>
                           handleChangeRole("instractor", user._id, user.name)
                         }
-                        className={`projectMainButton ${
-                          isInstructor ? "disabled" : ""
-                        }`}
+                        className={`projectMainButton btn`}
                       >
                         Instractor
                       </button>

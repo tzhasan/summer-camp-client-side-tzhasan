@@ -1,17 +1,32 @@
 import React, { useContext } from "react";
-import { Link, NavLink, Outlet } from "react-router-dom";
+import { Link, NavLink, Outlet, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import { AuthContext } from "../../Provider/AuthProvider";
 import useInstractor from "../../Hooks/useInstractor";
 import useStudent from "../../Hooks/useStudent";
 import Loading from "../../Shared Component/Loading";
 import Navbar from "../../Shared Component/Navbar";
+import manageUsericon from '../../../src/assets/icons/reshot-icon-users-FTWYDJLB5X.svg'
+import classicon from '../../../src/assets/icons/reshot-icon-class-YKDPZM8GN5.svg'
+import myclasses from '../../../src/assets/icons/myclasses.svg'
+import addaclass from '../../../src/assets/icons/addaclass.svg'
+import cart from '../../../src/assets/icons/cart.svg'
+import selected from '../../../src/assets/icons/selected.svg'
+import Footer from "../../Shared Component/Footer";
 
 const Dhashboard = () => {
-  const { user } = useContext(AuthContext);
+
+  const { user ,loading } = useContext(AuthContext);
   const [isAdmin] = useAdmin();
+  const navigate = useNavigate()
   const [isInstructor] = useInstractor();
   const [isStudent] = useStudent();
+  if (!user) {
+    return navigate('/')
+  }
+  if (loading || !user) {
+    return <Loading></Loading>
+  }
   return (
     <>
       <Navbar></Navbar>
@@ -31,16 +46,16 @@ const Dhashboard = () => {
         </div>
         <div className="drawer-side">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
-          <h1 className="md:text-4xl text-xl p-6 w-80  text-base-content">
-            {isAdmin
-              ? "Admin Dashboard"
-              : isInstructor
-              ? "Instructor Dashboard"
-              : isStudent
-              ? "Student Dashboard"
-              : "Dashboard Loading"}
-          </h1>
           <ul className="menu p-4 w-80 h-full text-base-content">
+            <h1 className="md:text-4xl text-xl p-6 w-80  text-base-content">
+              {isAdmin
+                ? "Admin Dashboard"
+                : isInstructor
+                ? "Instructor Dashboard"
+                : isStudent
+                ? "Student Dashboard"
+                : "Dashboard Loading"}
+            </h1>
             {/* Sidebar content here */}
             {isAdmin && user?.email && (
               <>
@@ -53,7 +68,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/manageusers"}
                   >
-                    Manage Users
+                    <img className="w-6" src={manageUsericon} /> Manage Users
                   </NavLink>
                 </li>
                 <li className="text1">
@@ -65,7 +80,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/manageclasses"}
                   >
-                    Manage Classes
+                    <img className="w-6" src={classicon} /> Manage Classes
                   </NavLink>
                 </li>
               </>
@@ -81,7 +96,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/myclasses"}
                   >
-                    My Classes
+                    <img className="w-6" src={myclasses} /> My Classes
                   </NavLink>
                 </li>
                 <li className="text1">
@@ -93,7 +108,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/addaclass"}
                   >
-                    Add a Class
+                    <img className="w-6" src={addaclass} /> Add a Class
                   </NavLink>
                 </li>
               </>
@@ -109,7 +124,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/myselectedclasses"}
                   >
-                    My Selected Classes
+                    <img className="w-6" src={cart} /> My Selected Classes
                   </NavLink>
                 </li>
                 <li className="text1">
@@ -121,7 +136,7 @@ const Dhashboard = () => {
                     }
                     to={"/dashboard/enrolledclasses"}
                   >
-                    My Enrolled Classes
+                    <img className="w-6" src={selected} /> My Enrolled Classes
                   </NavLink>
                 </li>
               </>
@@ -134,6 +149,7 @@ const Dhashboard = () => {
           </ul>
         </div>
       </div>
+      <Footer></Footer>
     </>
   );
 };

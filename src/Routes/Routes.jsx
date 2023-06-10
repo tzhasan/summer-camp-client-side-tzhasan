@@ -14,11 +14,15 @@ import EnrolledClasses from "../Pages/Dashboard/EnrolledClasses/EnrolledClasses"
 import ClassesPage from "../Pages/Classes/ClassesPage";
 import Instructor from "../Pages/Instructor/Instructor";
 import Payment from "../Pages/Payments/Payment";
+import InstructorRoute from "./InstructorRoute";
+import StudentRoute from "./StudentRoute";
+import Error404page from "../Pages/errorpage/Error404page";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <HomeLayoutes></HomeLayoutes>,
+    errorElement: <Error404page></Error404page>,
     children: [
       {
         path: "/",
@@ -38,7 +42,7 @@ const router = createBrowserRouter([
       },
       {
         path: "/instructors",
-        element: <Instructor/>,
+        element: <Instructor />,
       },
     ],
   },
@@ -48,33 +52,57 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/dashboard/manageclasses",
-        element: <ManageClasses></ManageClasses>,
+        element: (
+          <AdminRoute>
+            <ManageClasses></ManageClasses>
+          </AdminRoute>
+        ),
       },
 
       {
         path: "/dashboard/manageusers",
-        element: <ManageUsers></ManageUsers>,
+        element: (
+          <AdminRoute>
+            <ManageUsers></ManageUsers>
+          </AdminRoute>
+        ),
       },
       {
         path: "/dashboard/addaclass",
-        element: <AddaClass></AddaClass>,
+        element: (
+          <InstructorRoute>
+            <AddaClass></AddaClass>
+          </InstructorRoute>
+        ),
       },
       {
         path: "/dashboard/myclasses",
-        element: <MyClasses></MyClasses>,
+        element: (
+          <InstructorRoute>
+            <MyClasses></MyClasses>
+          </InstructorRoute>
+        ),
       },
       {
         path: "/dashboard/myselectedclasses",
-        element: <MySelectedClasses></MySelectedClasses>,
+        element: (
+          <StudentRoute>
+            <MySelectedClasses></MySelectedClasses>
+          </StudentRoute>
+        ),
       },
       {
         path: "/dashboard/enrolledclasses",
-        element: <EnrolledClasses></EnrolledClasses>,
+        element: (
+          <StudentRoute>
+            <EnrolledClasses></EnrolledClasses>
+          </StudentRoute>
+        ),
       },
       {
         path: "/dashboard/payment/:id",
-        element:<Payment/>
-      }
+        element: <Payment />,
+      },
     ],
   },
 ]);

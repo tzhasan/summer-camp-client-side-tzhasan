@@ -73,7 +73,7 @@ const MySelectedClasses = () => {
                       </div>
                     </td>
                     <td className="font-bold">{course?.instructorname}</td>
-                    <td className="font-bold">{course?.price}</td>
+                    <td className="font-bold text-red-500">${course?.price}</td>
                     <td>
                       {course?.enrolled ? (
                         <p className='text-green-600 md:text-2xl text-xl font-semibold'>Paid</p>
