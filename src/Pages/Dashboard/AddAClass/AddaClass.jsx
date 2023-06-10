@@ -25,6 +25,7 @@ const {user,loading} = useContext(AuthContext)
       status: "Pending",
       enrolled: enrolled,
       feedback: "Empty",
+      instructorImg: user.photoURL,
       totalseats: totalseats,
       availableSeats: parseFloat(totalseats - enrolled),
     };

@@ -25,7 +25,7 @@ const SliderSection = () => {
               Be an Expert on defferent Languages
             </h3>
 
-            <Link className="">
+            <Link to={"/classesPage"}>
               <button className="projectMainButton uppercase text-white">
                 our Courses
               </button>

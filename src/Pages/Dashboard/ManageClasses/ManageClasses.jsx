@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import Loading from "../../../Shared Component/Loading";
 
 const ManageClasses = () => {
+  const feedbackButtonRef = useRef(null);
   const [axiosSecure] = useAxiosSecure();
   const [modalId, setModalId] = useState("");
   const feedbackRef = useRef(null);
@@ -33,7 +34,8 @@ const ManageClasses = () => {
           });
           refetch();
           if (status === "Denied" || status === "Approved") {
-            window.my_modal_5.showModal();
+            // window.my_modal_5.showModal();
+            feedbackButtonRef.current.dispatchEvent(new MouseEvent("click"));
           }
         }
       })
@@ -182,6 +184,7 @@ const ManageClasses = () => {
             <div className="modal-action">
               {/* if there is a button in form, it will close the modal */}
               <button
+                ref={feedbackButtonRef}
                 onClick={() => handleFeedback()}
                 className="projectMainButton"
               >

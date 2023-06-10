@@ -75,20 +75,24 @@ const MySelectedClasses = () => {
                     <td className="font-bold">{course?.instructorname}</td>
                     <td className="font-bold">{course?.price}</td>
                     <td>
-                      <Link to={`/dashboard/payment/${course?.price}`}>
-                        <button
-                          className={`projectMainButton ${
-                            course.enrolled ? "disabled" : ""
-                          }`}
-                        >
-                          Pay
-                        </button>
-                      </Link>
+                      {course?.enrolled ? (
+                        <p className='text-green-600 md:text-2xl text-xl font-semibold'>Paid</p>
+                      ) : (
+                        <Link to={`/dashboard/payment/${course._id}`}>
+                          <button
+                            disabled={course?.enrolled}
+                            className={`btn projectMainButton `}
+                          >
+                            Pay
+                          </button>
+                        </Link>
+                      )}
                     </td>
                     <th>
                       <button
+                        disabled={course?.enrolled}
                         onClick={() => handleDelete(course.courseId)}
-                        className={`projectMainButton `}
+                        className={`btn projectMainButton `}
                       >
                         Delete
                       </button>
