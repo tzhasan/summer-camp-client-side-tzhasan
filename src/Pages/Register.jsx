@@ -7,8 +7,7 @@ import { AuthContext } from "../Provider/AuthProvider";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 // TODO: all requirments labels need to add red color *
 // TODO: Send gender info
-// TODO: reset and navigate not working
-// todo: hide unhide password like login page 
+// todo: hide unhide password like login page
 
 const Register = () => {
   const navigate = useNavigate();
@@ -18,7 +17,8 @@ const Register = () => {
   const [password2, setPassword2] = useState("");
   const [error, setError] = useState("");
   const [error2, setError2] = useState("");
-  const { createAccount, updateUserProfile, googleSignIn, user } = useContext(AuthContext)
+  const { createAccount, updateUserProfile, googleSignIn, user } =
+    useContext(AuthContext);
   console.log(user);
 
   useEffect(() => {
@@ -62,12 +62,7 @@ const Register = () => {
     } else {
       setError2("");
     }
-    const {
-      name,
-      password,
-      email,
-      photoURL,
-    } = data;
+    const { name, password, email, photoURL } = data;
     console.log(name, password, email, photoURL);
     createAccount(email, password)
       .then((result) => {
@@ -78,9 +73,9 @@ const Register = () => {
             name: data.name,
             email: data.email,
             photoURL: photoURL,
-            role: 'student'
+            role: "student",
           };
-          fetch("http://localhost:5000/users", {
+          fetch("https://summer-camp-server-tzhasan.vercel.app/users", {
             method: "POST",
             headers: {
               "content-type": "application/json",
@@ -119,7 +114,7 @@ const Register = () => {
           photoURL: user.photoURL,
           role: "student",
         };
-        fetch("http://localhost:5000/users", {
+        fetch("https://summer-camp-server-tzhasan.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",

@@ -68,7 +68,7 @@ const ManageUsers = () => {
                 const isAdmin = user.role === "admin";
                 const isInstructor = user.role === "instractor";
                 return (
-                  <tr key={i} className="text-lg">
+                  <tr key={i} className="text-lg text-gray-500">
                     <th>{i + 1}</th>
                     <td>
                       <div className="flex items-center space-x-3">
@@ -99,7 +99,7 @@ const ManageUsers = () => {
                     </td>
                     <th>
                       <button
-                        disabled={isInstructor}
+                        disabled={isInstructor || isAdmin}
                         onClick={() =>
                           handleChangeRole("instractor", user._id, user.name)
                         }

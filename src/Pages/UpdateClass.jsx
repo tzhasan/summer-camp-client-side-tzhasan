@@ -162,7 +162,10 @@ const UpdateClass = () => {
               </label>
             </div>
           </div>
-          <button type="submit" className="projectMainButton">
+          <button
+            type="submit"
+            className="projectMainButton"
+          >
             Update
           </button>
         </form>

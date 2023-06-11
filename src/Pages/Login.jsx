@@ -1,43 +1,54 @@
-import React, { useContext, useState } from 'react';
-import { Link, useLocation, useNavigate } from 'react-router-dom';
+import React, { useContext, useState } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { FcGoogle } from "react-icons/fc";
-import useAuth from '../Hooks/UseAuth';
-import useTitle from '../Hooks/useTitle';
-import { useForm } from 'react-hook-form';
-import Swal from 'sweetalert2';
-import { AuthContext } from '../Provider/AuthProvider';
-
+import useAuth from "../Hooks/UseAuth";
+import useTitle from "../Hooks/useTitle";
+import { useForm } from "react-hook-form";
+import Swal from "sweetalert2";
+import { AuthContext } from "../Provider/AuthProvider";
+import eyeclose from "../assets/icons/eyeclose.svg";
+import eyeopen from "../assets/icons/eyeopen.svg";
 
 // TODO: no error state after wrong pass
 const Login = () => {
+  const [error,setError] = useState('')
   const location = useLocation();
   console.log(location.state);
   const from = location.state?.from?.pathname || "/";
   const navigate = useNavigate();
 
-      useTitle("Login");
+  useTitle("Login");
   const { user, signIn, googleSignIn } = useContext(AuthContext);
-   // Submit
-  const { register, handleSubmit,reset } = useForm();
-  const [hide,setHide] = useState(true)
+  // Submit
+  const { register, handleSubmit, reset } = useForm();
+  const [hide, setHide] = useState(true);
 
-  
-
-  const onSubmit = (data) => { 
-    signIn(data.email, data.password)
-      .then(result => {
-        const user = result.user;
-        Swal.fire({
-          position: "top-center",
-          icon: "success",
-          title: "Logged in Successfully",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-        reset();
-        navigate(from, { replace: true });
-      })
-  }
+  const onSubmit = (data) => {
+    setError('')
+    signIn(data.email, data.password).then((result) => {
+      
+      const user = result.user;
+      Swal.fire({
+        position: "top-center",
+        icon: "success",
+        title: "Logged in Successfully",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+      reset();
+      navigate(from, { replace: true });
+    }).catch((error) => { 
+      setError(error.message)
+      console.log(error.message);
+      Swal.fire({
+        position: "top-end",
+        icon: "error",
+        title: "Try agein with valid email and password !",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    })
+  };
 
   const handlegoogleSignIn = () => {
     googleSignIn()
@@ -50,7 +61,7 @@ const Login = () => {
           photoURL: user.photoURL,
           role: "student",
         };
-        fetch("http://localhost:5000/users", {
+        fetch("https://summer-camp-server-tzhasan.vercel.app/users", {
           method: "POST",
           headers: {
             "content-type": "application/json",
@@ -72,6 +83,14 @@ const Login = () => {
         navigate(from, { replace: true });
       })
       .catch((err) => {
+        console.log(err.message);
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Try agein with valid email and password !",
+          showConfirmButton: false,
+          timer: 1500,
+        });
         // setLoading(false);
       });
   };
@@ -112,12 +131,16 @@ const Login = () => {
             onClick={() => setHide(!hide)}
             className="absolute indent-5 top-[50%] right-2 text-gray-500 dark:text-gray-300"
           >
-            {hide ? "Show" : "Hide"}
+            {hide ? (
+              <img className="w-6" src={eyeopen} />
+            ) : (
+              <img className="w-6" src={eyeclose} />
+            )}
           </button>
         </div>
         <div className="my-2 text-sm">
           {/* TODO "error" */}
-          <p className="text-red-600"></p>
+          <p className="text-red-600">{ error}</p>
         </div>
 
         <button
@@ -127,7 +150,7 @@ const Login = () => {
           Login
         </button>
 
-        <div className="my-4 text-sm font-medium text-gray-900 dark:text-gray-300">
+        <div className="my-4 text-sm font-medium text-gray-500 dark:text-gray-300">
           New here ?{" "}
           <Link
             to="/register"

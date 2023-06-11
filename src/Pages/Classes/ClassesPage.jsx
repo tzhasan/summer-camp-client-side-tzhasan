@@ -8,7 +8,6 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstractor from "../../Hooks/useInstractor";
 import useTitle from "../../Hooks/useTitle";
-// todo: without user how to render data!!
 
 const ClassesPage = () => {
   useTitle("Classes")
@@ -92,7 +91,11 @@ const ClassesPage = () => {
                 } shadow-xl image-full`}
               >
                 <figure>
-                  <img src={course?.imgurl} />
+                  <img
+                    className="group-hover:scale-125 
+              transition "
+                    src={course?.imgurl}
+                  />
                 </figure>
                 <div className="card-body ">
                   <h2 className="card-title text-xl md:text-4xl">

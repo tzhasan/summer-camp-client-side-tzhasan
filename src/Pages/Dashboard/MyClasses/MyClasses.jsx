@@ -6,7 +6,6 @@ import useAxiosSecure from '../../../Hooks/UseAxiosSecure';
 import Loading from '../../../Shared Component/Loading';
 import useTitle from '../../../Hooks/useTitle';
 import { Link } from 'react-router-dom';
-// todo: should work on update button
 const MyClasses = () => {
   useTitle("My Classes")
   const { user } = useContext(AuthContext)
@@ -83,7 +82,12 @@ const MyClasses = () => {
                 </p>
                 <div className="flex justify-center" bis_skin_checked={1}>
                   <Link to={`/dashboard/updateClassOfInstructor/${course._id}`}>
-                    <button className="projectMainButton">Update</button>
+                    <button
+                      disabled={course.status === "Denied"}
+                      className=" btn projectMainButton"
+                    >
+                      Update
+                    </button>
                   </Link>
                 </div>
               </div>

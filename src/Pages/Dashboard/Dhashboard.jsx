@@ -5,7 +5,6 @@ import { AuthContext } from "../../Provider/AuthProvider";
 import useInstractor from "../../Hooks/useInstractor";
 import useStudent from "../../Hooks/useStudent";
 import Loading from "../../Shared Component/Loading";
-import Navbar from "../../Shared Component/Navbar";
 import manageUsericon from '../../../src/assets/icons/reshot-icon-users-FTWYDJLB5X.svg'
 import classicon from '../../../src/assets/icons/reshot-icon-class-YKDPZM8GN5.svg'
 import myclasses from '../../../src/assets/icons/myclasses.svg'
@@ -13,7 +12,9 @@ import addaclass from '../../../src/assets/icons/addaclass.svg'
 import cart from '../../../src/assets/icons/cart.svg'
 import history from '../../../src/assets/icons/history.svg'
 import selected from '../../../src/assets/icons/selected.svg'
-import Footer from "../../Shared Component/Footer";
+import home1 from '../../../src/assets/icons/home1.svg'
+import classes1 from '../../../src/assets/icons/classes1.svg'
+import instructor1 from '../../../src/assets/icons/instrutor1.svg'
 
 const Dhashboard = () => {
 
@@ -64,7 +65,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/manageusers"}
                   >
@@ -76,7 +77,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/manageclasses"}
                   >
@@ -92,7 +93,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/myclasses"}
                   >
@@ -104,7 +105,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/addaclass"}
                   >
@@ -120,7 +121,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/myselectedclasses"}
                   >
@@ -132,7 +133,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/enrolledclasses"}
                   >
@@ -144,7 +145,7 @@ const Dhashboard = () => {
                     className={({ isActive }) =>
                       isActive
                         ? "text-sky-600 hover:bg-transparent"
-                        : "text-gray-400"
+                        : "text-gray-500"
                     }
                     to={"/dashboard/paymentHistory"}
                   >
@@ -155,14 +156,20 @@ const Dhashboard = () => {
             )}
 
             <div className="divider"></div>
-            <li className="text-lg md:text-xl text-gray-600  ">
-              <Link to={"/"}>Classes</Link>
+            <li className="text-lg md:text-xl text-gray-500  ">
+              <Link to={"/"}>
+                <img className="w-6" src={home1} /> Home
+              </Link>
             </li>
-            <li className="text-lg md:text-xl text-gray-600  ">
-              <Link to={"/classesPage"}>Instractors</Link>
+            <li className="text-lg md:text-xl text-gray-500  ">
+              <Link to={"/classesPage"}>
+                <img className="w-6" src={classes1} /> All Classes
+              </Link>
             </li>
-            <li className="text-lg md:text-xl text-gray-600  ">
-              <Link to={"/"}>Home</Link>
+            <li className="text-lg md:text-xl text-gray-500  ">
+              <Link to={"/instructors"}>
+                <img className="w-6" src={instructor1} /> Instractors
+              </Link>
             </li>
           </ul>
         </div>

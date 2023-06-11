@@ -25,7 +25,7 @@ const { data, isLoading} = useQuery({
             className="flex flex-col text-center w-full mb-10"
             bis_skin_checked={1}
           >
-            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">
+            <h1 className="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-500">
               OUR TOP INSTRUCTORS
             </h1>
             <p className="lg:w-2/3 mx-auto leading-relaxed text-base">
@@ -52,7 +52,7 @@ const { data, isLoading} = useQuery({
                         src={inst?.instructorImg}
                       />
                       <div className="flex-grow sm:pl-8" bis_skin_checked={1}>
-                        <h2 className=" font-semibold w-full text-lg md:text-xl text-gray-900">
+                        <h2 className=" font-semibold w-full text-lg md:text-xl text-gray-500">
                           {inst?.instructorname}
                         </h2>
                         <h3 className="text-gray-500 mb-3">

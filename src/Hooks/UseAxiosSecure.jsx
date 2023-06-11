@@ -2,14 +2,12 @@ import { useEffect } from "react";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
 
-
-
 const useAxiosSecure = () => {
   // const { logOut } = useAuth();
   const navigate = useNavigate();
 
   const axiosSecure = axios.create({
-    baseURL: "http://localhost:5000",
+    baseURL: "https://summer-camp-server-tzhasan.vercel.app",
   });
 
   useEffect(() => {
@@ -34,7 +32,7 @@ const useAxiosSecure = () => {
         return Promise.reject(error);
       }
     );
-  }, [ navigate, axiosSecure]);
+  }, [navigate, axiosSecure]);
 
   return [axiosSecure];
 };
