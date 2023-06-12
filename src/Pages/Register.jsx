@@ -7,11 +7,10 @@ import { AuthContext } from "../Provider/AuthProvider";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 // TODO: all requirments labels need to add red color *
 // TODO: Send gender info
-// todo: hide unhide password like login page
 
 const Register = () => {
   const navigate = useNavigate();
-  // const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
   const [password, setPassword] = useState("");
   const [password2, setPassword2] = useState("");
@@ -55,6 +54,30 @@ const Register = () => {
   const { register, handleSubmit, reset } = useForm();
 
   const onSubmit = (data) => {
+    // console.log(data);
+    // const formData = new FormData();
+    // formData.append("image", data.image[0]);
+    // console.log(formData);
+    // console.log(data.photoURL[0]);
+
+    // fetch(img_hosting_url, {
+    //   method: "POST",
+    //   body: formData,
+    // })
+    //   .then((res) => res.json())
+    //   .then((imgResponse) => {
+    //     if (imgResponse.success) {
+    //       const imgURL = imgResponse.data.display_url;
+    //       console.log(imgURL);
+    //     }
+    //   });
+
+
+    
+
+
+
+
     console.log({ data });
     if (data.password2 !== data.password) {
       setError2("Password don't match");
@@ -152,44 +175,44 @@ const Register = () => {
         </h1>
 
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Your name
           </label>
           <input
             {...register("name", { required: true, maxLength: 20 })}
             type="text"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Bill Gates"
             required
           />
         </div>
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Your email
           </label>
           <input
             type="email"
             {...register("email", { required: "Email Address is required" })}
             // aria-invalid={errors.mail ? "true" : "false"}
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="name@email.com"
             required
           />
         </div>
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Photo URL (Optional)
           </label>
           <input
-            {...register("photoURL")}
             type="text"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            {...register("photoURL", { required: true })}
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             placeholder="Photo URL Jpg/png/webp"
           />
         </div>
         {/* gender */}
         <div className="my-6 flex gap-4 items-center ">
-          <span className="block  text-lg font-medium text-gray-900 dark:text-white">
+          <span className="block  text-lg font-medium text-gray-500 dark:text-white">
             Gender
           </span>
           <div>
@@ -204,27 +227,27 @@ const Register = () => {
 
         {/* password */}
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Your password
           </label>
           <input
             {...register("password", { required: true, maxLength: 20 })}
             onChange={handlePasswordChange}
             type="password"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />
           {error && <div className="text-red-600">{error}</div>}
         </div>
         <div className="mb-6">
-          <label className="block mb-2 text-lg font-medium text-gray-900 dark:text-white">
+          <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Confirm Password
           </label>
           <input
             {...register("password2", { required: true, maxLength: 20 })}
             onChange={handlePasswordConfirm}
             type="password"
-            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
+            className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />
           {error2 && <div className="text-red-600">{error2}</div>}
@@ -238,7 +261,7 @@ const Register = () => {
           Register new account
         </button>
 
-        <div className="my-4 text-lg font-medium text-gray-900 dark:text-gray-300">
+        <div className="my-4 text-lg font-medium text-gray-500 dark:text-gray-300">
           Already have account ?{" "}
           <Link
             to="/login"

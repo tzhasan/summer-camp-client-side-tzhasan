@@ -31,7 +31,7 @@ const { data, isLoading, refetch } = useQuery({
             </p>
           </div>
 
-          <div className="flex flex-wrap -m-4" bis_skin_checked={1}>
+          <div className="md:flex md:flex-wrap md:-m-4" bis_skin_checked={1}>
             {data &&
               data.map((classes) => {
                 return (

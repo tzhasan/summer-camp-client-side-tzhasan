@@ -87,7 +87,7 @@ const ClassesPage = () => {
                     ? "bg-red-500"
                     : isAdmin || isInstructor
                     ? "bg-red-500"
-                    : "bg-green-200"
+                    : "bg-gray-500"
                 } shadow-xl image-full`}
               >
                 <figure>

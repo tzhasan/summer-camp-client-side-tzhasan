@@ -1,5 +1,4 @@
 import React from 'react';
-import anime from "animejs";
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/36395-lonely-404.json";
 import { Link } from 'react-router-dom';

@@ -3,6 +3,7 @@ import React, { useContext, useEffect, useState } from 'react';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { AuthContext } from '../../Provider/AuthProvider';
 import Swal from 'sweetalert2';
+import { useNavigate } from 'react-router-dom';
 
 
 const CheckoutForm = ({data}) => {
@@ -18,6 +19,7 @@ courseId } = data
   const [axiosSecure] = useAxiosSecure()
   const [clientSecret, setClientSecret] = useState('')
   const [processing, setProcessing] = useState(false)
+  const navigate = useNavigate()
 
   useEffect(() => {
     if (data && price ) {
@@ -94,6 +96,7 @@ courseId } = data
               showConfirmButton: false,
               timer: 1500,
             });
+            navigate("/dashboard/myselectedclasses");
           }
       })
       

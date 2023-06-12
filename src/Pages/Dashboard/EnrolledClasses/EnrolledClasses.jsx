@@ -4,6 +4,7 @@ import { useQuery } from '@tanstack/react-query';
 import Loading from '../../../Shared Component/Loading';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import useTitle from '../../../Hooks/useTitle';
+import NodataFound from '../../../Shared Component/NodataFound';
 
 const EnrolledClasses = () => {
   useTitle("Enrolled Classes")
@@ -33,37 +34,46 @@ const EnrolledClasses = () => {
             </tr>
           </thead>
           <tbody>
-            {/* row 1 */}
-            {user?.email &&
-              data &&
-              data.map((course, i) => {
-                return (
-                  <tr key={i} className="text-lg">
-                    <th>{i + 1}</th>
-                    <td>
-                      <div className="flex items-center space-x-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <img
-                              src={course?.imgurl}
-                              alt="Avatar Tailwind CSS Component"
-                            />
+            {user?.email && data ? (
+              data.length === 0 ? (
+                <tr>
+                  <td colSpan="4">
+                    <NodataFound />
+                  </td>
+                </tr>
+              ) : (
+                data.map((course, i) => {
+                  return (
+                    <tr key={i} className="text-lg">
+                      <th>{i + 1}</th>
+                      <td>
+                        <div className="flex items-center space-x-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle w-12 h-12">
+                              <img
+                                src={course?.imgurl}
+                                alt="Avatar Tailwind CSS Component"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">
+                              {course?.courseName}
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="font-bold">{course?.courseName}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="font-bold">{course?.instructorname}</td>
-                    <td>
-                      <button className="projectMainButton">
-                        View Modules
-                      </button>
-                    </td>
-                  </tr>
-                );
-              })}
+                      </td>
+                      <td className="font-bold">{course?.instructorname}</td>
+                      <td>
+                        <button className="projectMainButton">
+                          View Modules
+                        </button>
+                      </td>
+                    </tr>
+                  );
+                })
+              )
+            ) : null}
           </tbody>
         </table>
       </div>

@@ -9,7 +9,6 @@ import { AuthContext } from "../Provider/AuthProvider";
 import eyeclose from "../assets/icons/eyeclose.svg";
 import eyeopen from "../assets/icons/eyeopen.svg";
 
-// TODO: no error state after wrong pass
 const Login = () => {
   const [error,setError] = useState('')
   const location = useLocation();
@@ -38,15 +37,9 @@ const Login = () => {
       reset();
       navigate(from, { replace: true });
     }).catch((error) => { 
-      setError(error.message)
+      setError("Try agein with valid email and password !");
       console.log(error.message);
-      Swal.fire({
-        position: "top-end",
-        icon: "error",
-        title: "Try agein with valid email and password !",
-        showConfirmButton: false,
-        timer: 1500,
-      });
+      
     })
   };
 

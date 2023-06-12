@@ -6,6 +6,7 @@ import Loading from '../../../Shared Component/Loading';
 import Swal from 'sweetalert2';
 import { Link } from 'react-router-dom';
 import useTitle from '../../../Hooks/useTitle';
+import NodataFound from '../../../Shared Component/NodataFound';
 
 const MySelectedClasses = () => {
   useTitle("Selected Classes");
@@ -51,57 +52,71 @@ const MySelectedClasses = () => {
               <th>Action</th>
             </tr>
           </thead>
+
           <tbody>
-            {/* row 1 */}
-            {user?.email &&
-              data &&
-              data.map((course, i) => {
-                return (
-                  <tr key={i} className="text-lg">
-                    <th>{i + 1}</th>
-                    <td>
-                      <div className="flex items-center space-x-3">
-                        <div className="avatar">
-                          <div className="mask mask-squircle w-12 h-12">
-                            <img
-                              src={course?.imgurl}
-                              alt="Avatar Tailwind CSS Component"
-                            />
+            {user?.email && data ? (
+              data.length === 0 ? (
+                <tr>
+                  <td colSpan="6">
+                    <NodataFound />
+                  </td>
+                </tr>
+              ) : (
+                data.map((course, i) => {
+                  return (
+                    <tr key={i} className="text-lg">
+                      <th>{i + 1}</th>
+                      <td>
+                        <div className="flex items-center space-x-3">
+                          <div className="avatar">
+                            <div className="mask mask-squircle w-12 h-12">
+                              <img
+                                src={course?.imgurl}
+                                alt="Avatar Tailwind CSS Component"
+                              />
+                            </div>
+                          </div>
+                          <div>
+                            <div className="font-bold">
+                              {course?.courseName}
+                            </div>
                           </div>
                         </div>
-                        <div>
-                          <div className="font-bold">{course?.courseName}</div>
-                        </div>
-                      </div>
-                    </td>
-                    <td className="font-bold">{course?.instructorname}</td>
-                    <td className="font-bold text-red-500">${course?.price}</td>
-                    <td>
-                      {course?.enrolled ? (
-                        <p className='text-green-600 md:text-2xl text-xl font-semibold'>Paid</p>
-                      ) : (
-                        <Link to={`/dashboard/payment/${course._id}`}>
-                          <button
-                            disabled={course?.enrolled}
-                            className={`btn projectMainButton `}
-                          >
-                            Pay
-                          </button>
-                        </Link>
-                      )}
-                    </td>
-                    <th>
-                      <button
-                        disabled={course?.enrolled}
-                        onClick={() => handleDelete(course.courseId)}
-                        className={`btn projectMainButton `}
-                      >
-                        Delete
-                      </button>
-                    </th>
-                  </tr>
-                );
-              })}
+                      </td>
+                      <td className="font-bold">{course?.instructorname}</td>
+                      <td className="font-bold text-red-500">
+                        ${course?.price}
+                      </td>
+                      <td>
+                        {course?.enrolled ? (
+                          <p className="text-green-600 md:text-2xl text-xl font-semibold">
+                            Paid
+                          </p>
+                        ) : (
+                          <Link to={`/dashboard/payment/${course._id}`}>
+                            <button
+                              disabled={course?.enrolled}
+                              className="btn projectMainButton"
+                            >
+                              Pay
+                            </button>
+                          </Link>
+                        )}
+                      </td>
+                      <th>
+                        <button
+                          disabled={course?.enrolled}
+                          onClick={() => handleDelete(course.courseId)}
+                          className="btn projectMainButton"
+                        >
+                          Delete
+                        </button>
+                      </th>
+                    </tr>
+                  );
+                })
+              )
+            ) : null}
           </tbody>
         </table>
       </div>

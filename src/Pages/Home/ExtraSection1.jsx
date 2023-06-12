@@ -37,7 +37,7 @@ const ExtraSection1 = () => {
         BUILD UP YOUR SUPER SKILLS
       </h1>
       <div className="w-[60%] mx-auto">
-        <Lottie animationData={groovyWalkAnimation} loop={true} />;
+        <Lottie animationData={groovyWalkAnimation} loop={true} />
       </div>
     </div>
   );

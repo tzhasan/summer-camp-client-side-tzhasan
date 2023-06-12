@@ -35,17 +35,19 @@ const Dhashboard = () => {
         <input id="my-drawer-2" type="checkbox" className="drawer-toggle" />
         <div className="drawer-content flex flex-col items-center ">
           {/* Page content here */}
-          <label
-            htmlFor="my-drawer-2"
-            className="projectMainButton drawer-button lg:hidden"
-          >
-            Open drawer
-          </label>
-          <div className="w-full py-4 px-10">
+          <div className="absolute top-2 left-2 px-10">
+            <label
+              htmlFor="my-drawer-2"
+              className="btn btn-outline rounded-full drawer-button lg:hidden"
+            >
+              Menu
+            </label>
+          </div>
+          <div className="w-full py-14 md:py-4 px-10 ">
             <Outlet></Outlet>
           </div>
         </div>
-        <div className="drawer-side">
+        <div className="drawer-side bg-gray-600 md:bg-white ">
           <label htmlFor="my-drawer-2" className="drawer-overlay"></label>
           <ul className="menu p-4 w-80 h-full text-base-content">
             <h1 className="md:text-4xl text-xl p-6 w-80  text-base-content">

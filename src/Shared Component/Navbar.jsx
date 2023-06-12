@@ -30,7 +30,7 @@ const Navbar = () => {
   return (
     <div className="navbar bg-slate-200 bg-opacity-80 md:sticky md:top-0 md:z-50">
       <div className="navbar-start md:mx-10 mx-2">
-        <div className="dropdown">
+        <div className="dropdown md:z-50 ">
           <label
             onClick={toggleMenu}
             tabIndex={0}
@@ -53,7 +53,7 @@ const Navbar = () => {
           </label>
           <ul
             tabIndex={0}
-            className={`menu menu-compact dropdown-content mt-3 p-2 shadow text-gray-600 rounded-box w-52 bg-gray-400 ${
+            className={`menu menu-compact dropdown-content mt-3 p-2 shadow text-gray-600 rounded-box w-52 bg-gray-400 z-50 ${
               isMenuOpen ? "" : "hidden"
             }`}
           >
