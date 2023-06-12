@@ -27,13 +27,6 @@ const Register = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log({ data });
-    if (data.password2 !== data.password) {
-      setError2("Password don't match");
-      return;
-    } else {
-      setError2("");
-    }
     const { name, password, email, photoURL } = data;
     console.log(name, password, email, photoURL);
     createAccount(email, password)
