@@ -7,6 +7,9 @@ import { useQuery } from '@tanstack/react-query';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 import Loading from '../../Shared Component/Loading';
 
+import groovyWalkAnimation from "../../assets/33810-payments.json";
+import Lottie from "lottie-react";
+
 const stripePromise = loadStripe(import.meta.env.VITE_payment_Gatway_PK);
 const Payment = () => {
   const [axiosSecure] = useAxiosSecure()
@@ -25,7 +28,10 @@ const Payment = () => {
   
   return (
     <div>
-      payment
+      <div className="w-[20vw] mx-auto">
+        <Lottie animationData={groovyWalkAnimation} loop={true} />
+      </div>
+
       <Elements stripe={stripePromise}>
         <CheckoutForm data={data}></CheckoutForm>
       </Elements>

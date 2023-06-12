@@ -1,7 +1,9 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 import { useQuery } from '@tanstack/react-query';
 import Loading from '../../Shared Component/Loading';
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 
 const PopulerInstructors = () => {
 
@@ -13,6 +15,10 @@ const { data, isLoading} = useQuery({
     return res.data;
   },
 });
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+
   if (isLoading) {
     return <Loading></Loading>
   }
@@ -41,7 +47,12 @@ const { data, isLoading} = useQuery({
               data && 
               data.map((inst,i) => {
                 return (
-                  <div key={i} className="p-4 lg:w-1/2" bis_skin_checked={1}>
+                  <div
+                    data-aos="fade-up"
+                    key={i}
+                    className="p-4 lg:w-1/2"
+                    bis_skin_checked={1}
+                  >
                     <div
                       className="h-full flex sm:flex-row flex-col items-center sm:justify-start justify-center text-center sm:text-left"
                       bis_skin_checked={1}

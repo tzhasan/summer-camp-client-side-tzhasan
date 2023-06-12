@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import useAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import Loading from "../../../src/Shared Component/Loading";
@@ -8,6 +8,8 @@ import { Navigate, useLocation, useNavigate } from "react-router-dom";
 import useAdmin from "../../Hooks/useAdmin";
 import useInstractor from "../../Hooks/useInstractor";
 import useTitle from "../../Hooks/useTitle";
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 
 const ClassesPage = () => {
   useTitle("Classes")
@@ -66,6 +68,10 @@ const ClassesPage = () => {
       .catch((err) => console.log(err.message));
   }
 
+useEffect(() => {
+  AOS.init({ duration: 1000 });
+}, []);
+
   if (loading) {
     return <Loading />;
   }
@@ -81,6 +87,7 @@ const ClassesPage = () => {
           data.map((course) => {
             return (
               <div
+                data-aos="zoom-in"
                 key={course._id}
                 className={`card p-1 w-full group ${
                   course.availableSeats <= 0

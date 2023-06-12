@@ -1,8 +1,10 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
 import Loading from '../../Shared Component/Loading';
 import useTitle from '../../Hooks/useTitle';
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 
 const Instructor = () => {
   useTitle("Instructor")
@@ -14,7 +16,10 @@ const Instructor = () => {
       return res.data;
     },
   });
-  console.log(data && data);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
   if (isLoading) {
     return <Loading></Loading>;
   }
@@ -32,12 +37,10 @@ const Instructor = () => {
               <th>Action</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody data-aos="fade-up">
             {/* row 1 */}
-            {
-              data &&
+            {data &&
               data.map((user, i) => {
-               
                 return (
                   <tr key={i} className="text-lg">
                     <th>{i + 1}</th>

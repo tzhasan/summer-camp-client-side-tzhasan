@@ -63,11 +63,11 @@ const Login = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.insertedId) {
+            if (data) {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "User created successfully.",
+                title: "Signed in by Google successfully.",
                 showConfirmButton: false,
                 timer: 1500,
               });

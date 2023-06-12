@@ -7,77 +7,26 @@ import { AuthContext } from "../Provider/AuthProvider";
 const img_hosting_token = import.meta.env.VITE_Image_Upload_token;
 // TODO: all requirments labels need to add red color *
 // TODO: Send gender info
+// at the last of this page have codes for imagebb photo upload , need to do later
 
 const Register = () => {
   const navigate = useNavigate();
-  const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
+  // const img_hosting_url = `https://api.imgbb.com/1/upload?key=${img_hosting_token}`;
 
-  const [password, setPassword] = useState("");
-  const [password2, setPassword2] = useState("");
-  const [error, setError] = useState("");
-  const [error2, setError2] = useState("");
   const { createAccount, updateUserProfile, googleSignIn, user } =
     useContext(AuthContext);
   console.log(user);
 
-  useEffect(() => {
-    if (password2 === password) {
-      setError2("");
-    } else {
-      setError2("Password does not match");
-    }
-  }, [password, password2]);
-
-  const handlePasswordChange = (event) => {
-    const newPassword = event.target.value;
-    setPassword(newPassword);
-
-    if (
-      !/^.*(?=.{6,})(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/.test(
-        newPassword
-      )
-    ) {
-      setError(
-        "Password must be at least 6 characters long, contain at least one lowercase letter, one uppercase letter, and one special character."
-      );
-    } else {
-      setError("");
-    }
-  };
-
-  const handlePasswordConfirm = (event) => {
-    const newPassword = event.target.value;
-    setPassword2(newPassword);
-  };
-
   // Submit
-  const { register, handleSubmit, reset } = useForm();
+  const {
+    register,
+    handleSubmit,
+    reset,
+    watch,
+    formState: { errors },
+  } = useForm();
 
   const onSubmit = (data) => {
-    // console.log(data);
-    // const formData = new FormData();
-    // formData.append("image", data.image[0]);
-    // console.log(formData);
-    // console.log(data.photoURL[0]);
-
-    // fetch(img_hosting_url, {
-    //   method: "POST",
-    //   body: formData,
-    // })
-    //   .then((res) => res.json())
-    //   .then((imgResponse) => {
-    //     if (imgResponse.success) {
-    //       const imgURL = imgResponse.data.display_url;
-    //       console.log(imgURL);
-    //     }
-    //   });
-
-
-    
-
-
-
-
     console.log({ data });
     if (data.password2 !== data.password) {
       setError2("Password don't match");
@@ -146,20 +95,20 @@ const Register = () => {
         })
           .then((res) => res.json())
           .then((data) => {
-            if (data.insertedId) {
+            if (data) {
               Swal.fire({
                 position: "top-end",
                 icon: "success",
-                title: "User created successfully.",
+                title: "Signed in by Google successfully.",
                 showConfirmButton: false,
                 timer: 1500,
               });
             }
           });
-        // navigate(from, { replace: true });
+        navigate("/");
       })
       .catch((err) => {
-        // setLoading(false);
+        console.log(err.message);
       });
   };
 
@@ -231,26 +180,44 @@ const Register = () => {
             Your password
           </label>
           <input
-            {...register("password", { required: true, maxLength: 20 })}
-            onChange={handlePasswordChange}
+            {...register("password", {
+              required: true,
+              minLength: {
+                value: 6,
+                message: "Password must be at least 6 characters long.",
+              },
+              pattern: {
+                value: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#$%^&+=]).*$/,
+                message:
+                  "Password must contain at least one capital letter and one special character.",
+              },
+            })}
             type="password"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />
-          {error && <div className="text-red-600">{error}</div>}
+          {errors.password && (
+            <div className="text-red-600">{errors.password.message}</div>
+          )}
         </div>
         <div className="mb-6">
           <label className="block mb-2 text-lg font-medium text-gray-500 dark:text-white">
             Confirm Password
           </label>
           <input
-            {...register("password2", { required: true, maxLength: 20 })}
-            onChange={handlePasswordConfirm}
+            {...register("password2", {
+              required: true,
+              maxLength: 20,
+              validate: (value) =>
+                value === watch("password") || "Passwords don't match",
+            })}
             type="password"
             className="shadow-sm bg-gray-50 border border-gray-300 text-gray-500 text-lg rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light"
             required
           />
-          {error2 && <div className="text-red-600">{error2}</div>}
+          {errors.password2 && (
+            <div className="text-red-600">{errors.password2.message}</div>
+          )}
         </div>
         {/* password */}
 
@@ -287,3 +254,21 @@ const Register = () => {
 };
 
 export default Register;
+
+// console.log(data);
+// const formData = new FormData();
+// formData.append("image", data.image[0]);
+// console.log(formData);
+// console.log(data.photoURL[0]);
+
+// fetch(img_hosting_url, {
+//   method: "POST",
+//   body: formData,
+// })
+//   .then((res) => res.json())
+//   .then((imgResponse) => {
+//     if (imgResponse.success) {
+//       const imgURL = imgResponse.data.display_url;
+//       console.log(imgURL);
+//     }
+//   });

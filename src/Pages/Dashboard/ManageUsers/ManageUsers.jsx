@@ -6,7 +6,6 @@ import Swal from "sweetalert2";
 import useAdmin from "../../../Hooks/useAdmin";
 import Loading from "../../../Shared Component/Loading";
 import useTitle from "../../../Hooks/useTitle";
-// todo: if user already admin then change the button color 
 const ManageUsers = () => {
   useTitle("Manage Users")
   const [isAdmin, isAdminLoading] = useAdmin();

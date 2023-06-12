@@ -2,6 +2,8 @@ import React, { useEffect } from "react";
 import anime from "animejs";
 import Lottie from "lottie-react";
 import groovyWalkAnimation from "../../assets/67523-teamwork-lottie-animation.json";
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 
 const ExtraSection1 = () => {
   useEffect(() => {
@@ -31,12 +33,20 @@ const ExtraSection1 = () => {
         delay: (el, i) => 100 + 30 * i,
       });
   }, []);
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
+  
   return (
     <div className="md:mt-16">
-      <h1 className="ml12 text-3xl text-center md:text-8xl text-sky-600 ">
+      <h1
+        data-aos="fade-up"
+        className="ml12 text-3xl text-center md:text-8xl text-sky-600 "
+      >
         BUILD UP YOUR SUPER SKILLS
       </h1>
-      <div className="w-[60%] mx-auto">
+      <div data-aos="fade-up" className="w-[60%] mx-auto">
         <Lottie animationData={groovyWalkAnimation} loop={true} />
       </div>
     </div>

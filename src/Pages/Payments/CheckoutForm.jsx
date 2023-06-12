@@ -105,8 +105,9 @@ courseId } = data
   }
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form className=' w-1/2 mx-auto ' onSubmit={handleSubmit}>
         <CardElement
+          className=' my-4'
           options={{
             style: {
               base: {
@@ -126,7 +127,7 @@ courseId } = data
         Pay
       </button> */}
         <button
-          className="btn btn-sm btn-outline btn-success"
+          className="btn btn-sm btn-outline w-full btn-success"
           type="submit"
           disabled={!stripe || !clientSecret || processing}
         >

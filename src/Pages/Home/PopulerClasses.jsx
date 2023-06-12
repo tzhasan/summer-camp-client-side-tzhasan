@@ -1,9 +1,12 @@
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import React, { useEffect } from 'react';
 import useAxiosSecure from '../../Hooks/UseAxiosSecure';
+import AOS from "aos";
+import "aos/dist/aos.css"; 
 
 const PopulerClasses = () => {
-const[axiosSecure] = useAxiosSecure()
+  const [axiosSecure] = useAxiosSecure()
+  
 const { data, isLoading, refetch } = useQuery({
   queryKey: ["popularClass"],
   queryFn: async () => {
@@ -11,6 +14,10 @@ const { data, isLoading, refetch } = useQuery({
     return res.data;
   },
 });
+  
+   useEffect(() => {
+     AOS.init({ duration: 1000 });
+   }, []);
 
   return (
     <div>
@@ -36,6 +43,7 @@ const { data, isLoading, refetch } = useQuery({
               data.map((classes) => {
                 return (
                   <div
+                    data-aos="fade-up"
                     key={classes._id}
                     className="lg:w-1/3 sm:w-1/2 p-4"
                     bis_skin_checked={1}
@@ -54,7 +62,7 @@ const { data, isLoading, refetch } = useQuery({
                           Course Name: {classes.coursename}
                         </h2>
                         <h1 className="title-font text-lg font-medium text-gray-900 mb-3">
-                         Total Enrolled: {classes.enrolled}
+                          Total Enrolled: {classes.enrolled}
                         </h1>
                         <p className="leading-relaxed text-md md:text-lg font-bold">
                           Price: ${classes.price}

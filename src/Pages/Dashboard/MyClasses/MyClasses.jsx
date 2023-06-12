@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect } from 'react';
 import { AuthContext } from '../../../Provider/AuthProvider';
 import useInstractor from '../../../Hooks/useInstractor';
 import { useQuery } from '@tanstack/react-query';
@@ -7,6 +7,9 @@ import Loading from '../../../Shared Component/Loading';
 import useTitle from '../../../Hooks/useTitle';
 import { Link } from 'react-router-dom';
 import NodataFound from '../../../Shared Component/NodataFound';
+import AOS from "aos";
+import "aos/dist/aos.css"; 
+
 const MyClasses = () => {
   useTitle("My Classes")
   const { user } = useContext(AuthContext)
@@ -20,6 +23,10 @@ const MyClasses = () => {
         return res.data
     }
   })
+
+  useEffect(() => {
+    AOS.init({ duration: 1000 });
+  }, []);
   if (!data && isLoading) {
     return <Loading/>
   }
@@ -32,6 +39,7 @@ const MyClasses = () => {
           data.map((course, i) => {
             return (
               <section
+                data-aos="fade-up"
                 className="text-gray-600 body-font border-2 rounded-lg bg-sky-100 py-4"
                 key={i}
               >
